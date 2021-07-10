@@ -14,6 +14,43 @@ const RegisterComplete = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // validation
+
+    if (!email || !password) {
+      toast.error("Email and password are required !");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be of at least 6 characters");
+      return;
+    }
+
+    try {
+      const result = await auth.signInWithEmailLink(
+        email,
+        window.location.href
+      );
+
+      if (result.user.emailVerified) {
+        //   remove user email from local storage
+        window.localStorage.removeItem("emailForRegistration");
+
+        // get user id token , user and update password
+        let user = auth.currentUser;
+        await user.updatePassword(password);
+        const idTokenResult = await user.getIdTokenResult();
+        console.log(user);
+        console.log(idTokenResult);
+        // redux store
+
+        // redirect
+        history.push("/");
+      }
+    } catch (error) {
+      //   toast.error(error.message);
+    }
   };
 
   const completeRegistrationForm = () => (
