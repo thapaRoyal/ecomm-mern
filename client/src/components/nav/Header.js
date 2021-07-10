@@ -23,7 +23,6 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-
       <Item key="register" icon={<UserAddOutlined />} className="float-right">
         <Link to="/register">Register</Link>
       </Item>
