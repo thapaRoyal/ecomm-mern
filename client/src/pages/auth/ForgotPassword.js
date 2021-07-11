@@ -11,7 +11,24 @@ const ForgotPassword = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //
+    setLoading(true);
+
+    const config = {
+      url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL,
+      handleCodeInApp: true,
+    };
+
+    await auth
+      .sendPasswordResetEmail(email, config)
+      .then(() => {
+        setEmail("");
+        setLoading(false);
+        toast.success("Check your email for password reset link");
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+      });
   };
 
   return (
