@@ -44,7 +44,7 @@ const Login = () => {
         shape="round"
         icon={<MailOutlined />}
         size="large"
-        disabled={!email || password.length < 6 && }
+        disabled={!email || password.length < 6}
       >
         Login with Email and Password
       </Button>
