@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 
-import { auth } from "../../firebase";
+import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { MailOutlined } from "@ant-design/icons";
+import {
+  GoogleOutlined,
+  LoadingOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 
 const Login = ({ history }) => {
-  const [email, setEmail] = useState("thaparoyal27@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +26,7 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
+      toast.success("Logged in successfully");
 
       dispatch({
         type: "LOGGED_IN_USER",
@@ -35,6 +40,29 @@ const Login = ({ history }) => {
       console.log(error);
       toast.error(error.message);
       setLoading(false);
+    }
+  };
+
+  const googleLogin = async (e) => {
+    e.preventDefault();
+
+    // try catch block
+    try {
+      const result = await auth.signInWithPopup(googleAuthProvider);
+      const { user } = result;
+      const idTokenResult = await user.getIdTokenResult();
+      toast.success("Logged in successfully");
+
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          email: user.email,
+          token: idTokenResult.token,
+        },
+      });
+      history.push("/");
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -79,8 +107,19 @@ const Login = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <h4>Login</h4>
+          {loading ? <LoadingOutlined /> : <h4>Login</h4>}
           {loginForm()}
+
+          <Button
+            onClick={googleLogin}
+            type="danger"
+            block
+            shape="round"
+            icon={<GoogleOutlined />}
+            size="large"
+          >
+            Login with Google
+          </Button>
         </div>
       </div>
     </div>

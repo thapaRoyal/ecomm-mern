@@ -47,6 +47,7 @@ const RegisterComplete = ({ history }) => {
 
         // redirect
         history.push("/");
+        toast.success("Registered successfully");
       }
     } catch (error) {
       //   toast.error(error.message);
