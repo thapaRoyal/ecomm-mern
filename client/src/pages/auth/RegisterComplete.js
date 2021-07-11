@@ -41,8 +41,8 @@ const RegisterComplete = ({ history }) => {
         let user = auth.currentUser;
         await user.updatePassword(password);
         const idTokenResult = await user.getIdTokenResult();
-        console.log(user);
-        console.log(idTokenResult);
+        // console.log(user);
+        // console.log(idTokenResult);
         // redux store
 
         // redirect
