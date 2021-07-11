@@ -4,6 +4,7 @@ import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 
 const RegisterComplete = ({ history }) => {
+  // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +13,7 @@ const RegisterComplete = ({ history }) => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
   }, []);
 
+  // handle submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,6 +29,7 @@ const RegisterComplete = ({ history }) => {
       return;
     }
 
+    // try catch block
     try {
       const result = await auth.signInWithEmailLink(
         email,
@@ -41,8 +44,6 @@ const RegisterComplete = ({ history }) => {
         let user = auth.currentUser;
         await user.updatePassword(password);
         const idTokenResult = await user.getIdTokenResult();
-        // console.log(user);
-        // console.log(idTokenResult);
         // redux store
 
         // redirect
@@ -54,6 +55,7 @@ const RegisterComplete = ({ history }) => {
     }
   };
 
+  // register complete form
   const completeRegistrationForm = () => (
     <form onSubmit={handleSubmit}>
       <br />

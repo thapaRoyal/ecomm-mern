@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const ForgotPassword = ({ history }) => {
+  // state
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //   takng current state from store and updating state
   const { user } = useSelector((state) => ({ ...state }));
 
   // redirecting user to homepage
@@ -18,15 +20,18 @@ const ForgotPassword = ({ history }) => {
     }
   }, [user]);
 
+  //   handle submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    // redirecting user to the app after clicking the link
     const config = {
       url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT_URL,
       handleCodeInApp: true,
     };
 
+    // try catch block
     await auth
       .sendPasswordResetEmail(email, config)
       .then(() => {
@@ -41,6 +46,7 @@ const ForgotPassword = ({ history }) => {
   };
 
   return (
+    //   forgot password form
     <div className="container col-md-6 offset-md-3 p-5">
       {loading ? <LoadingOutlined /> : <h4>Forgot Password ?</h4>}
 

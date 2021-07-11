@@ -5,8 +5,10 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const Register = ({ history }) => {
+  // state
   const [email, setEmail] = useState("");
 
+  //  taking current state from store and returing new state
   const { user } = useSelector((state) => ({ ...state }));
 
   // redirecting user to homepage
@@ -16,9 +18,11 @@ const Register = ({ history }) => {
     }
   }, [user]);
 
+  // handle submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //redirecting user to app after the clicking the registration link
     const config = {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
@@ -38,6 +42,7 @@ const Register = ({ history }) => {
     setEmail("");
   };
 
+  // regster form
   const registerForm = () => (
     <form onSubmit={handleSubmit}>
       <input

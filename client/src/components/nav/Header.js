@@ -13,11 +13,17 @@ import { useHistory } from "react-router-dom";
 
 import firebase from "firebase";
 
+// destructuring
 const { SubMenu, Item } = Menu;
 
+// function
 const Header = () => {
+  // state
   const [current, setCurrent] = useState("home");
+
+  //dispatch an action to store
   let dispatch = useDispatch();
+
   let history = useHistory();
 
   // get user from state
@@ -28,6 +34,7 @@ const Header = () => {
     setCurrent(e.key);
   };
 
+  // logout function
   const logout = () => {
     firebase.auth().signOut();
     dispatch({
@@ -38,6 +45,7 @@ const Header = () => {
   };
 
   return (
+    // Navbar
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home </Link>

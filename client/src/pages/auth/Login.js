@@ -12,10 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Login = ({ history }) => {
+  // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //  taking current state from store and returing new state
   const { user } = useSelector((state) => ({ ...state }));
 
   // redirecting user to homepage
@@ -25,8 +27,10 @@ const Login = ({ history }) => {
     }
   }, [user]);
 
+  //dispatch an action to store
   let dispatch = useDispatch();
 
+  // handle submit function || login with email and password function
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -53,6 +57,7 @@ const Login = ({ history }) => {
     }
   };
 
+  // google login function
   const googleLogin = async (e) => {
     e.preventDefault();
 
@@ -76,6 +81,7 @@ const Login = ({ history }) => {
     }
   };
 
+  // login form
   const loginForm = () => (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
