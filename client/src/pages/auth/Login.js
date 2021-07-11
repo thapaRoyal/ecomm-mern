@@ -9,6 +9,7 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -120,6 +121,9 @@ const Login = ({ history }) => {
           >
             Login with Google
           </Button>
+          <Link to="/forgot/password" className="float-right text-danger mt-2">
+            Forgot password ?
+          </Link>
         </div>
       </div>
     </div>
