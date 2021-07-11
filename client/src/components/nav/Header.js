@@ -8,7 +8,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import firebase from "firebase";
@@ -19,6 +19,9 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
   let dispatch = useDispatch();
   let history = useHistory();
+
+  // get user from state
+  let { user } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
     // console.log(e.key);
@@ -37,23 +40,35 @@ const Header = () => {
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/">Home</Link>
+        <Link to="/">Home </Link>
       </Item>
 
-      <SubMenu key="submenu" icon={<SettingOutlined />} title="Username">
-        <Item key="setting:1">Option 1</Item>
-        <Item key="setting:2">Option 2</Item>
-        <Item icon={<LogoutOutlined />} onClick={logout}>
-          Logout
+      {user && (
+        <SubMenu
+          key="submenu"
+          icon={<SettingOutlined />}
+          title={user.email && user.email.split("@")[0]}
+          className="ml-auto"
+        >
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item icon={<LogoutOutlined />} onClick={logout}>
+            Logout
+          </Item>
+        </SubMenu>
+      )}
+
+      {!user && (
+        <Item key="login" icon={<UserOutlined />} className="ml-auto">
+          <Link to="/login">Login</Link>
         </Item>
-      </SubMenu>
+      )}
 
-      <Item key="login" icon={<UserOutlined />} className="ml-auto">
-        <Link to="/login">Login</Link>
-      </Item>
-      <Item key="register" icon={<UserAddOutlined />}>
-        <Link to="/register">Register</Link>
-      </Item>
+      {!user && (
+        <Item key="register" icon={<UserAddOutlined />}>
+          <Link to="/register">Register</Link>
+        </Item>
+      )}
     </Menu>
   );
 };
