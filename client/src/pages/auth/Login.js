@@ -32,6 +32,15 @@ const Login = ({ history }) => {
   //dispatch an action to store
   let dispatch = useDispatch();
 
+  // role based riderect
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      history.push("/admin/dashboard");
+    } else {
+      history.push("/user/history");
+    }
+  };
+
   // handle submit function || login with email and password function
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,10 +65,11 @@ const Login = ({ history }) => {
               _id: res.data._id,
             },
           });
+          roleBasedRedirect(res);
         })
         .catch((err) => console.log(err));
 
-      history.push("/");
+      // history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -90,10 +100,11 @@ const Login = ({ history }) => {
               _id: res.data._id,
             },
           });
+          roleBasedRedirect(res);
         })
         .catch((err) => console.log(err));
 
-      history.push("/");
+      // history.push("/");
     } catch (error) {
       toast.error(error.message);
     }
