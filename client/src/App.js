@@ -15,6 +15,8 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import History from "./pages/user/History";
 import UserRoute from "./components/routes/UserRoute";
+import Wishlist from "./pages/user/Wishlist";
+import PasswordUpdate from "./pages/user/PasswordUpdate";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log(user);
+        // console.log(user);
         const idTokenResult = await user.getIdTokenResult();
 
         currentUser(idTokenResult.token)
@@ -57,6 +59,8 @@ const App = () => {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <UserRoute exact path="/user/history" component={History} />
+        <UserRoute exact path="/user/password" component={PasswordUpdate} />
+        <UserRoute exact path="/user/wishlist" component={Wishlist} />
       </Switch>
     </>
   );
