@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { updateCategory, getCategory } from "../../../functions/category";
 import { LoadingOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryUpdate = ({ history, match }) => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -35,26 +36,6 @@ const CategoryUpdate = ({ history, match }) => {
       });
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-            required
-          />
-          <br />
-          <button className="btn btn-outline-primary">Update</button>
-        </div>
-      </form>
-    );
-  };
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -63,7 +44,11 @@ const CategoryUpdate = ({ history, match }) => {
         </div>
         <div className="col">
           {loading ? <LoadingOutlined /> : <h4>Update Category</h4>}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
         </div>
       </div>

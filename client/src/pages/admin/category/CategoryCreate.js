@@ -10,6 +10,7 @@ import {
 import { LoadingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -61,26 +62,6 @@ const CategoryCreate = () => {
     }
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-            required
-          />
-          <br />
-          <button className="btn btn-outline-primary">Create</button>
-        </div>
-      </form>
-    );
-  };
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -89,7 +70,11 @@ const CategoryCreate = () => {
         </div>
         <div className="col">
           {loading ? <LoadingOutlined /> : <h4>Create Category</h4>}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
           {categories.map((cat) => (
             <div className="alert alert-secondary" key={cat._id}>
