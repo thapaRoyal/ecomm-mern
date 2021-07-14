@@ -12,7 +12,7 @@ const {
   update,
   remove,
   list,
-} = require("../controllers/category");
+} = require("../controllers/categoryController");
 
 // ROUTES
 router.post("/category", authCheck, adminCheck, create);
