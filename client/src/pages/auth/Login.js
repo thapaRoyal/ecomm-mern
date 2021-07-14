@@ -27,7 +27,7 @@ const Login = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   //dispatch an action to store
   let dispatch = useDispatch();

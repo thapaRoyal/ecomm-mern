@@ -8,11 +8,7 @@ const UserRoute = ({ children, ...rest }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   //   protect route
-  return user && user.token ? (
-    <Route {...rest} render={() => children} />
-  ) : (
-    <LoadingToRedirects />
-  );
+  return user && user.token ? <Route {...rest} /> : <LoadingToRedirects />;
 };
 
 export default UserRoute;

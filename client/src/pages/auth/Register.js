@@ -16,7 +16,7 @@ const Register = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   // handle submit function
   const handleSubmit = async (e) => {
