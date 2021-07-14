@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const RegisterComplete = ({ history }) => {
@@ -11,7 +11,7 @@ const RegisterComplete = ({ history }) => {
   const [password, setPassword] = useState("");
 
   //  taking current state from store and returing new state
-  const { user } = useSelector((state) => ({ ...state }));
+  // const { user } = useSelector((state) => ({ ...state }));
 
   let dispatch = useDispatch();
 
