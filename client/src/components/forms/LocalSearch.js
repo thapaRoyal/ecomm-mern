@@ -7,15 +7,13 @@ const LocalSearch = ({ setKeyword, keyword }) => {
   };
 
   return (
-    <div className="container pt-4 pb-4">
-      <input
-        type="search"
-        placeholder="Filter"
-        value={keyword}
-        onChange={handleSearchChange}
-        className="form-control mb-4"
-      />
-    </div>
+    <input
+      type="search"
+      placeholder="Filter"
+      value={keyword}
+      onChange={handleSearchChange}
+      className="form-control mb-4"
+    />
   );
 };
 

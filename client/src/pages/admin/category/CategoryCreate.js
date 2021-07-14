@@ -83,7 +83,6 @@ const CategoryCreate = () => {
             setName={setName}
           />
           <LocalSearch setKeyword={setKeyword} keyword={keyword} />
-          <hr />
           {categories.filter(searched(keyword)).map((cat) => (
             <div className="alert alert-secondary" key={cat._id}>
               {cat.name}{" "}
