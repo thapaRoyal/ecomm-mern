@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { createSub, getSubs, removeSub } from "../../../functions/sub";
+import { createSub, getSubs, getSub, removeSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -17,6 +17,7 @@ const SubCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [subs, setSubs] = useState([]);
   const [category, setCategory] = useState("");
 
   // searching / filtering
@@ -24,10 +25,13 @@ const SubCreate = () => {
 
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () =>
     getCategories().then((cat) => setCategories(cat.data));
+
+  const loadSubs = () => getSubs().then((sub) => setSubs(sub.data));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +41,7 @@ const SubCreate = () => {
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is created`);
+        loadSubs();
       })
       .catch((err) => {
         console.log(err);
@@ -53,6 +58,7 @@ const SubCreate = () => {
         .then((res) => {
           setLoading(false);
           toast.error(`"${res.data.name}" is deleted`);
+          loadSubs();
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -101,22 +107,22 @@ const SubCreate = () => {
 
           <LocalSearch setKeyword={setKeyword} keyword={keyword} />
 
-          {/* {categories.filter(searched(keyword)).map((cat) => (
-            <div className="alert alert-secondary" key={cat._id}>
-              {cat.name}{" "}
+          {subs.filter(searched(keyword)).map((sub) => (
+            <div className="alert alert-secondary" key={sub._id}>
+              {sub.name}
               <span
-                onClick={() => handleRemove(cat.slug)}
+                onClick={() => handleRemove(sub.slug)}
                 className="btn btn-sm float-right"
               >
                 <DeleteOutlined className="text-danger" />
               </span>
-              <Link to={`/admin/category/${cat.slug}`}>
+              <Link to={`/admin/sub/${sub.slug}`}>
                 <span className="btn btn-sm float-right">
                   <EditOutlined className="text-warning" />
                 </span>
               </Link>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>
