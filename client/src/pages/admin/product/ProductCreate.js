@@ -49,8 +49,8 @@ const ProductCreate = ({ history }) => {
       .then((res) => {
         console.log(res);
         toast.success(`"${res.data.title}" is created`);
-        // window.location.reload();
-        history.push("/admin/products");
+        window.location.reload();
+        // history.push("/admin/products");
       })
       .catch((err) => {
         console.log(err);
