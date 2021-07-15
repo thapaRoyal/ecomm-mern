@@ -20,7 +20,7 @@ const initialState = {
   brand: "",
 };
 
-const ProductCreate = () => {
+const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
 
   // redux
@@ -48,6 +48,9 @@ const ProductCreate = () => {
     createProduct(values, user.token)
       .then((res) => {
         console.log(res);
+        toast.success(`"${res.data.title}" is created`);
+        // window.location.reload();
+        history.push("/admin/products");
       })
       .catch((err) => {
         console.log(err);
@@ -161,7 +164,7 @@ const ProductCreate = () => {
               </select>
             </div>
 
-            <button className="btn btn-outline-info">Save</button>
+            <button className="btn btn-outline-info">Create</button>
           </form>
         </div>
       </div>
