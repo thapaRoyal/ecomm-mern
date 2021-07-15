@@ -101,6 +101,23 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
         </select>
       </div>
 
+      <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleChange}
+        >
+          <option>Select a category</option>
+          {categories.length > 0 &&
+            categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+        </select>
+      </div>
+
       <button className="btn btn-outline-info">Create</button>
     </form>
   );

@@ -32,10 +32,10 @@ const productSchema = new mongoose.Schema(
       maxlength: 32,
     },
 
-    // category: {
-    //   type: ObjectId,
-    //   ref: "Category",
-    // },
+    category: {
+      type: ObjectId,
+      ref: "Category",
+    },
 
     // subs: [
     //   {

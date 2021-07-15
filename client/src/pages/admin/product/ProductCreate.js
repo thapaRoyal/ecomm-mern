@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import { getCategories } from "../../../functions/category";
 
 const initialState = {
   title: "",
@@ -26,6 +27,15 @@ const ProductCreate = ({ history }) => {
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () =>
+    getCategories().then((cat) =>
+      setValues({ ...values, categories: cat.data })
+    );
 
   const handleSubmit = (e) => {
     e.preventDefault();
