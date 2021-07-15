@@ -18,11 +18,11 @@ exports.read = async (req, res) => {
   res.json(sub);
 };
 exports.update = async (req, res) => {
-  const { name } = req.body;
+  const { name, parent } = req.body;
   try {
     let updated = await Sub.findOneAndUpdate(
       { slug: req.params.slug },
-      { name, slug: slugify(name) },
+      { name, parent, slug: slugify(name) },
       { new: true }
     );
     res.json(updated);
