@@ -6,10 +6,10 @@ const router = express.Router();
 const { authCheck, adminCheck } = require("../middlewares/authMiddleware");
 
 // controllers
-const { create, read } = require("../controllers/productController");
+const { create, listAll } = require("../controllers/productController");
 
 // ROUTES
 router.post("/product", authCheck, adminCheck, create);
-router.get("/products", read);
+router.get("/products/:count", listAll); //products/10
 
 module.exports = router;
