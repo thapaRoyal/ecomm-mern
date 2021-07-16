@@ -17,7 +17,7 @@ const initialState = {
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus"],
+  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus", "Dell"],
   color: "",
   brand: "",
 };
@@ -44,9 +44,9 @@ const ProductCreate = ({ history }) => {
       .then((res) => {
         console.log(res);
         toast.success(`"${res.data.title}" is created`);
-        // window.location.reload();
         // history.push("/admin/products");
-        setValues(initialState);
+        // setValues(initialState);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -63,11 +63,12 @@ const ProductCreate = ({ history }) => {
   const handleCategoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setValues({ ...values, subs: [], [e.target.name]: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
       console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
       setSubOptions(res.data);
     });
+    setShowSub(true);
   };
 
   return (
@@ -86,6 +87,7 @@ const ProductCreate = ({ history }) => {
             handleCategoryChange={handleCategoryChange}
             subOptions={subOptions}
             showSub={showSub}
+            setValues={setValues}
           />
         </div>
       </div>
