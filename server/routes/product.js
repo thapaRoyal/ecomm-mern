@@ -10,6 +10,6 @@ const { create, listAll } = require("../controllers/productController");
 
 // ROUTES
 router.post("/product", authCheck, adminCheck, create);
-router.get("/products/:count", listAll); //products/10
+router.get("/products/:count", listAll); // products/100
 
 module.exports = router;
