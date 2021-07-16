@@ -26,7 +26,7 @@ const AdminDashboard = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col md-2">
+        <div className="col-md-2">
           <AdminNav />
         </div>
         {loading ? <h4>Loading...</h4> : <h4>All products</h4>}
