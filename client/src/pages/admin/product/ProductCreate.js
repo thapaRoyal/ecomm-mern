@@ -83,7 +83,7 @@ const ProductCreate = ({ history }) => {
           <hr />
 
           <div className="p-3">
-            <FileUpload />
+            <FileUpload values={values} setValues={setValues} />
           </div>
 
           <ProductCreateForm
