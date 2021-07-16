@@ -83,8 +83,6 @@ const ProductCreate = ({ history }) => {
           <h4> Create Product</h4>
           <hr />
 
-          {JSON.stringify(values.images)}
-
           <div className="p-3">
             <FileUpload
               values={values}
