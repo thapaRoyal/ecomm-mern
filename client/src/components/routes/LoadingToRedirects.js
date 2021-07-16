@@ -19,7 +19,7 @@ const LoadingToRedirects = () => {
   return (
     <div className="container p-5 text-center">
       <p>Redirecting you in {count} seconds</p>
-      <LoadingOutlined />
+      <LoadingOutlined className="h1" />
     </div>
   );
 };

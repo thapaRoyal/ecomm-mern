@@ -152,7 +152,7 @@ const Login = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          {loading ? <LoadingOutlined /> : <h4>Login</h4>}
+          {loading ? <LoadingOutlined className="h1" /> : <h4>Login</h4>}
           {loginForm()}
 
           <Button

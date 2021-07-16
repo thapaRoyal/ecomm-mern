@@ -43,7 +43,11 @@ const CategoryUpdate = ({ history, match }) => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? <LoadingOutlined /> : <h4>Update Category</h4>}
+          {loading ? (
+            <LoadingOutlined className="h1" />
+          ) : (
+            <h4>Update Category</h4>
+          )}
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}

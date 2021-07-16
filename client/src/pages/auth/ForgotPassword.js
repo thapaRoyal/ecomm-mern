@@ -48,7 +48,11 @@ const ForgotPassword = ({ history }) => {
   return (
     //   forgot password form
     <div className="container col-md-6 offset-md-3 p-5">
-      {loading ? <LoadingOutlined /> : <h4>Forgot Password ?</h4>}
+      {loading ? (
+        <LoadingOutlined className="h1" />
+      ) : (
+        <h4>Forgot Password ?</h4>
+      )}
 
       <form onSubmit={handleSubmit}>
         <input

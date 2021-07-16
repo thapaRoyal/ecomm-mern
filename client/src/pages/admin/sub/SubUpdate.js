@@ -56,7 +56,11 @@ const SubUpdate = ({ match, history }) => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? <LoadingOutlined /> : <h4>Update Sub Category</h4>}
+          {loading ? (
+            <LoadingOutlined className="h1" />
+          ) : (
+            <h4>Update Sub Category</h4>
+          )}
 
           <div className="form-group">
             <select

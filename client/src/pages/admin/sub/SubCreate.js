@@ -79,7 +79,11 @@ const SubCreate = () => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? <LoadingOutlined /> : <h4>Create Sub Category</h4>}
+          {loading ? (
+            <LoadingOutlined className="h1" />
+          ) : (
+            <h4>Create Sub Category</h4>
+          )}
 
           {/* {JSON.stringify(category)} */}
 
