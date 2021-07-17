@@ -2,6 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Jumbotron from "../components/cards/Jumbotron";
 import ProductCard from "../components/cards/ProductCard";
+import LoadingCard from "../components/cards/LoadingCard";
 import { getProductsByCount } from "../functions/product";
 
 const Home = () => {
@@ -28,13 +29,17 @@ const Home = () => {
         {/* {loading ? <LoadingOutlined className="h1" /> : <h4>All Products</h4>} */}
       </div>
       <div className="container">
-        <div className="row">
-          {products.map((product) => (
-            <div className="col-md-4" key={product._id}>
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <LoadingCard count={6} />
+        ) : (
+          <div className="row">
+            {products.map((product) => (
+              <div className="col-md-4" key={product._id}>
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
