@@ -21,7 +21,11 @@ const Product = ({ match }) => {
       </div>
 
       <div className="row">
-        <div>Related Products</div>
+        <div className="col text-center pt-5 pb-5">
+          <hr />
+          <h4>Related Products</h4>
+          <hr />
+        </div>
       </div>
     </div>
   );
