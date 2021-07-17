@@ -10,29 +10,32 @@ const ProductCard = ({ product }) => {
   // destructure
   const { images, title, description, slug } = product;
   return (
-    <Card
-      hoverable
-      cover={
-        <img
-          alt=""
-          src={images && images.length ? images[0].url : laptop}
-          style={{ height: "150px", objectFit: "cover" }}
-          className="p-1"
-        />
-      }
-      actions={[
-        <Link to={`/product/${slug}`}>
-          <EyeOutlined className="text-primary" />
-          <br />
-          View Product
-        </Link>,
-        <>
-          <ShoppingCartOutlined className="text-danger" />, Add to Cart
-        </>,
-      ]}
-    >
-      <Meta />
-    </Card>
+    <>
+      <Card
+        hoverable
+        cover={
+          <img
+            alt=""
+            src={images && images.length ? images[0].url : laptop}
+            style={{ height: "150px", objectFit: "cover" }}
+            className="p-1"
+          />
+        }
+        actions={[
+          <Link to={`/product/${slug}`}>
+            <EyeOutlined className="text-primary" />
+            <br />
+            View Product
+          </Link>,
+          <>
+            <ShoppingCartOutlined className="text-danger" />, Add to Cart
+          </>,
+        ]}
+      >
+        <Meta />
+      </Card>
+      <br />
+    </>
   );
 };
 
