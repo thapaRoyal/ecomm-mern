@@ -8,9 +8,12 @@ import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
 
-const ProductUpdate = ({ history }) => {
+const ProductUpdate = ({ match }) => {
   // redux
   const { user } = useSelector((state) => ({ ...state }));
+
+  // router
+  const { slug } = match.params;
 
   return (
     <div className="container-fluid">
@@ -20,6 +23,7 @@ const ProductUpdate = ({ history }) => {
         </div>
         <div className="col-md-10">
           <h4>Update Product</h4>
+          {slug}
           <hr />
         </div>
       </div>
