@@ -8,13 +8,15 @@ const ProductUpdateForm = ({
   handleChange,
   values,
   setValues,
+  handleCategoryChange,
+  categories,
+  subOptions,
 }) => {
   // destructure
   const {
     title,
     description,
     price,
-    categories,
     category,
     subs,
     shipping,
@@ -114,6 +116,23 @@ const ProductUpdateForm = ({
               {b}
             </option>
           ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleCategoryChange}
+        >
+          <option>{category ? category.name : "Please select "}</option>
+          {categories.length > 0 &&
+            categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
         </select>
       </div>
 
