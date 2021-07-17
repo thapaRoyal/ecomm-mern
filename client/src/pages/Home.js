@@ -1,30 +1,8 @@
-import { LoadingOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Jumbotron from "../components/cards/Jumbotron";
-import ProductCard from "../components/cards/ProductCard";
-import LoadingCard from "../components/cards/LoadingCard";
-import { getProducts } from "../functions/product";
 import NewArrivals from "../components/home/NewArrivals";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    loadAllProducts();
-  }, []);
-
-  const loadAllProducts = () => {
-    setLoading(true);
-
-    // sort , order, limit
-    getProducts("createdAt", "desc", 6).then((res) => {
-      console.log(res.data);
-      setProducts(res.data);
-      setLoading(false);
-    });
-  };
-
   return (
     <>
       <div className="jumbotron text-primary h1 font-weight-bold text-center">
@@ -36,6 +14,7 @@ const Home = () => {
         New Arrivals
       </h4>
       <NewArrivals />
+      <br />
     </>
   );
 };
