@@ -15,7 +15,7 @@ const BestSellers = () => {
     setLoading(true);
 
     // sort , order, limit
-    getProducts("sold", "desc", 6).then((res) => {
+    getProducts("sold", "desc", 3).then((res) => {
       console.log(res.data);
       setProducts(res.data);
       setLoading(false);
@@ -26,7 +26,7 @@ const BestSellers = () => {
     <>
       <div className="container">
         {loading ? (
-          <LoadingCard count={6} />
+          <LoadingCard count={3} />
         ) : (
           <div className="row">
             {products.map((product) => (
