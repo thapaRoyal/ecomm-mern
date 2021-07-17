@@ -11,7 +11,7 @@ const Home = () => {
         {/* {loading ? <LoadingOutlined className="h1" /> : <h4>All Products</h4>} */}
       </div>
 
-      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron ">
         New Arrivals
       </h4>
       <NewArrivals />
