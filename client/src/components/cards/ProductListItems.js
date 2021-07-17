@@ -32,7 +32,7 @@ const ProductListItems = ({ product }) => {
             <Link
               key={s._id}
               to={`/sub/${s.slug}`}
-              className="label label-default label-pull pull-xs-right"
+              className="label label-default label-pill pull-xs-right"
             >
               {s.name}
             </Link>
