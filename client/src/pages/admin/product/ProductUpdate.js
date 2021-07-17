@@ -30,6 +30,7 @@ const ProductUpdate = ({ match }) => {
   const [categories, setCategories] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -107,8 +108,21 @@ const ProductUpdate = ({ match }) => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <h4>Update Product</h4>
+          {loading ? (
+            <LoadingOutlined className="h1" />
+          ) : (
+            <h4>Update Product</h4>
+          )}
           {/* {JSON.stringify(values.slug)} */}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
+
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
