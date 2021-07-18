@@ -7,6 +7,7 @@ import {
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -58,6 +59,14 @@ const Header = () => {
           <Link to="/">Home </Link>
         </Item>
 
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop">Shop </Link>
+        </Item>
+
+        <Item className="ml-auto">
+          <Search />
+        </Item>
+
         {user && (
           <SubMenu
             key="submenu"
@@ -93,9 +102,6 @@ const Header = () => {
             <Link to="/register">Register</Link>
           </Item>
         )}
-        <span className="ml-auto ">
-          <Search />
-        </span>
       </Menu>
     </>
   );
