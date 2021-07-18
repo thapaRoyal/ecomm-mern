@@ -5,7 +5,7 @@ const ProductListItems = ({ product }) => {
   const { price, category, subs, shipping, color, sold, quantity, brand } =
     product;
   return (
-    <ul classname="list-group">
+    <ul className="list-group">
       <li className="list-group-item">
         price{" "}
         <span className="label label-default label-pull pull-xs-right">

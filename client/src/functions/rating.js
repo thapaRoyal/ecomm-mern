@@ -20,7 +20,14 @@ export const showAverage = (p) => {
     return (
       <div className="text-center pt-1 pb-3">
         <span>
-          <StarRating rating={result} />
+          <StarRating
+            rating={result}
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="red"
+            editing={false}
+          />
+          ({p.ratings.length})
         </span>
       </div>
     );
