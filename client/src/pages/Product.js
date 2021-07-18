@@ -20,10 +20,10 @@ const Product = ({ match }) => {
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
-    // console.table(newRating, name);
-    productStar(name, star, user.token).then(res => {
-      loadSingleProduct()
-    })
+    console.table(newRating, name);
+    productStar(name, newRating, user.token).then((res) => {
+      loadSingleProduct();
+    });
   };
 
   return (
