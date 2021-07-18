@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getProductsByCount } from "../functions/product";
+import {
+  getProductsByCount,
+  fetchProductsByFilter,
+} from "../functions/product";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -8,15 +11,36 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  let { search } = useSelector((state) => ({ ...state }));
+  const { text } = search;
+
   useEffect(() => {
     loadAllProducts();
   }, []);
+
+  //   load products on default page load
   const loadAllProducts = () => {
     getProductsByCount(12).then((p) => {
       setProducts(p.data);
       setLoading(false);
     });
   };
+
+  //   load products on user search input
+  useEffect(() => {
+    const delayed = setTimeout(() => {
+      fetchProducts({ query: text });
+    }, 300);
+    return () => clearTimeout(delayed);
+  }, [text]);
+
+  const fetchProducts = (arg) => {
+    // console.log("Loading products on user search input", text);
+    fetchProductsByFilter(arg).then((res) => {
+      setProducts(res.data);
+    });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
