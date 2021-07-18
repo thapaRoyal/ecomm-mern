@@ -93,6 +93,7 @@ const Shop = () => {
             </SubMenu>
           </Menu>
         </div>
+
         <div className="col-md-9">
           {loading ? (
             <LoadingOutlined className="h1" />
