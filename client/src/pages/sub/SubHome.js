@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { getCategory } from "../../functions/category";
+import { getSub } from "../../functions/sub";
 import ProductCard from "../../components/cards/ProductCard";
 import { LoadingOutlined } from "@ant-design/icons";
 
-const CategoryHome = ({ match }) => {
-  const [category, setCategory] = useState({});
+const SubHome = ({ match }) => {
+  const [sub, setSub] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const { slug } = match.params;
 
   useEffect(() => {
     setLoading(true);
-    getCategory(slug).then((c) => {
-      console.log(JSON.stringify(c.data, null, 4));
-      setCategory(c.data.category);
-      setProducts(c.data.products);
+    getSub(slug).then((res) => {
+      console.log(JSON.stringify(res.data, null, 4));
+      setSub(res.data.sub);
+      setProducts(res.data.products);
       setLoading(false);
     });
   }, []);
@@ -27,7 +28,7 @@ const CategoryHome = ({ match }) => {
             <LoadingOutlined className="text-center p-3 mt-5 mb-5 display-4 jumbotron" />
           ) : (
             <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-              {products.length} Products in "{category.name}" Category
+              {products.length} Products in "{sub.name}" Sub Category
             </h4>
           )}
         </div>
@@ -43,4 +44,4 @@ const CategoryHome = ({ match }) => {
   );
 };
 
-export default CategoryHome;
+export default SubHome;
