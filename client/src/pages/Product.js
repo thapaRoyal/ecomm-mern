@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import SingleProduct from "../components/cards/SingleProduct";
 import { getProduct, productStar } from "../functions/product";
 import { useSelector } from "react-redux";
+import { getRelated } from "../functions/product";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
+  const [related, setRelated] = useState([]);
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -24,8 +26,13 @@ const Product = ({ match }) => {
     }
   });
 
-  const loadSingleProduct = () =>
-    getProduct(slug).then((res) => setProduct(res.data));
+  const loadSingleProduct = () => {
+    getProduct(slug).then((res) => {
+      setProduct(res.data);
+      // load related
+      getRelated(res.data._id).then((res) => setRelated(res.data));
+    });
+  };
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
@@ -49,6 +56,7 @@ const Product = ({ match }) => {
         <div className="col text-center pt-5 pb-5">
           <hr />
           <h4>Related Products</h4>
+          {JSON.stringify(related)}
           <hr />
         </div>
       </div>
