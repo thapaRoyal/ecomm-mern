@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import firebase from "firebase";
+import Search from "../forms/Search";
 
 // destructuring
 const { SubMenu, Item } = Menu;
@@ -46,52 +47,57 @@ const Header = () => {
 
   return (
     // Navbar
-    <Menu
-      key="menu"
-      onClick={handleClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-    >
-      <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/">Home </Link>
-      </Item>
+    <>
+      <Menu
+        key="menu"
+        onClick={handleClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+      >
+        <Item key="home" icon={<AppstoreOutlined />}>
+          <Link to="/">Home </Link>
+        </Item>
 
-      {user && (
-        <SubMenu
-          key="submenu"
-          icon={<SettingOutlined />}
-          title={user.email && user.email.split("@")[0]}
-          className="ml-auto"
-        >
-          {user && user.role === "subscriber" && (
-            <Item>
-              <Link to="/users/history">Dashboard</Link>
-            </Item>
-          )}
+        {user && (
+          <SubMenu
+            key="submenu"
+            icon={<SettingOutlined />}
+            title={user.email && user.email.split("@")[0]}
+            className="ml-auto"
+          >
+            {user && user.role === "subscriber" && (
+              <Item>
+                <Link to="/users/history">Dashboard</Link>
+              </Item>
+            )}
 
-          {user && user.role === "admin" && (
-            <Item>
-              <Link to="/admin/dashboard">Dashboard</Link>
+            {user && user.role === "admin" && (
+              <Item>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </Item>
+            )}
+            <Item icon={<LogoutOutlined />} onClick={logout}>
+              Logout
             </Item>
-          )}
-          <Item icon={<LogoutOutlined />} onClick={logout}>
-            Logout
+          </SubMenu>
+        )}
+
+        {!user && (
+          <Item key="login" icon={<UserOutlined />} className="ml-auto">
+            <Link to="/login">Login</Link>
           </Item>
-        </SubMenu>
-      )}
+        )}
 
-      {!user && (
-        <Item key="login" icon={<UserOutlined />} className="ml-auto">
-          <Link to="/login">Login</Link>
-        </Item>
-      )}
-
-      {!user && (
-        <Item key="register" icon={<UserAddOutlined />}>
-          <Link to="/register">Register</Link>
-        </Item>
-      )}
-    </Menu>
+        {!user && (
+          <Item key="register" icon={<UserAddOutlined />}>
+            <Link to="/register">Register</Link>
+          </Item>
+        )}
+        <span className="ml-auto ">
+          <Search />
+        </span>
+      </Menu>
+    </>
   );
 };
 
