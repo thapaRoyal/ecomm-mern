@@ -50,7 +50,7 @@ const Cart = () => {
         <div className="col-md-8">
           {!cart.length ? (
             <p>
-              No products in cart. <Link to="/shop">Continuw shopping</Link>
+              No products in cart. <Link to="/shop">Continue shopping</Link>
             </p>
           ) : (
             showCartItems()
