@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 
 exports.create = async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     req.body.slug = slugify(req.body.title);
     const newProduct = await new Product(req.body).save();
     res.json(newProduct);
@@ -138,7 +138,7 @@ exports.productStar = async (req, res) => {
       },
       { new: true }
     ).exec();
-    console.log("ratings Added", ratingAdded);
+    // console.log("ratings Added", ratingAdded);
     res.json(ratingAdded);
   } else {
     // if user have left rating then, update it
@@ -149,7 +149,7 @@ exports.productStar = async (req, res) => {
       { $set: { "ratings.$.star": star } },
       { new: true }
     ).exec();
-    console.log("rating updated", ratingUpdated);
+    // console.log("rating updated", ratingUpdated);
     res.json(ratingUpdated);
   }
 };
@@ -284,42 +284,42 @@ exports.searchFilters = async (req, res) => {
     req.body;
 
   if (query) {
-    console.log("QUERY --->", query);
+    // console.log("QUERY --->", query);
     await handleQuery(req, res, query);
   }
 
   // price [0 , 10]
   if (price !== undefined) {
-    console.log("PRICE --->", price);
+    // console.log("PRICE --->", price);
     await handlePrice(req, res, price);
   }
   if (category) {
-    console.log("CATEGORY --->", category);
+    // console.log("CATEGORY --->", category);
     await handleCategory(req, res, category);
   }
 
   if (stars) {
-    console.log("STARS --->", stars);
+    // console.log("STARS --->", stars);
     await handleStar(req, res, stars);
   }
 
   if (sub) {
-    console.log("SUB --->", sub);
+    // console.log("SUB --->", sub);
     await handleSub(req, res, sub);
   }
 
   if (shipping) {
-    console.log("SHIPPING --->", shipping);
+    // console.log("SHIPPING --->", shipping);
     await handleShipping(req, res, shipping);
   }
 
   if (color) {
-    console.log("COLOR --->", color);
+    // console.log("COLOR --->", color);
     await handleColor(req, res, color);
   }
 
   if (brand) {
-    console.log("BRAND --->", brand);
+    // console.log("BRAND --->", brand);
     await handleBrand(req, res, brand);
   }
 };

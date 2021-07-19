@@ -45,7 +45,7 @@ const ProductCreate = ({ history }) => {
     e.preventDefault();
     createProduct(values, user.token)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         toast.success(`"${res.data.title}" is created`);
         // history.push("/admin/products");
         // setValues(initialState);
@@ -65,10 +65,10 @@ const ProductCreate = ({ history }) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED CATEGORY", e.target.value);
+    // console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
+      // console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
       setSubOptions(res.data);
     });
     setShowSub(true);

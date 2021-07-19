@@ -33,7 +33,7 @@ const AllProducts = () => {
   const handleRemove = (slug) => {
     let answer = window.confirm("Are you sure you want to remove ?");
     if (answer) {
-      console.log("SEND DELETE REQUEST", slug);
+      // console.log("SEND DELETE REQUEST", slug);
       removeProduct(slug, user.token)
         .then((res) => {
           loadAllProducts();

@@ -6,7 +6,7 @@ const Product = require("../models/productModel");
 exports.create = async (req, res) => {
   try {
     const { name } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     res.json(await new Category({ name, slug: slugify(name) }).save());
   } catch (err) {
     console.log(err);

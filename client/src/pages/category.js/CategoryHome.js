@@ -12,7 +12,7 @@ const CategoryHome = ({ match }) => {
   useEffect(() => {
     setLoading(true);
     getCategory(slug).then((c) => {
-      console.log(JSON.stringify(c.data, null, 4));
+      // console.log(JSON.stringify(c.data, null, 4));
       setCategory(c.data.category);
       setProducts(c.data.products);
       setLoading(false);

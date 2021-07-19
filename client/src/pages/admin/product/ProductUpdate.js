@@ -45,7 +45,7 @@ const ProductUpdate = ({ match, history }) => {
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
-      console.log("SINGLE PRODUCT", p);
+      // console.log("SINGLE PRODUCT", p);
       // load single product
       setValues({ ...values, ...p.data });
 
@@ -58,7 +58,7 @@ const ProductUpdate = ({ match, history }) => {
       p.data.subs.map((s) => {
         arr.push(s._id);
       });
-      console.log("ARR", arr);
+      // console.log("ARR", arr);
       setArrayOfSubs((prev) => arr); //required for antd Select to work
     });
   };
@@ -96,17 +96,17 @@ const ProductUpdate = ({ match, history }) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED CATEGORY", e.target.value);
+    // console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [] });
 
     setSelectedCategory(e.target.value);
 
     getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
+      // console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
       setSubOptions(res.data);
     });
 
-    console.log("EXISTING CATEGORY values.category", values.category);
+    // console.log("EXISTING CATEGORY values.category", values.category);
 
     // if user clicks back to the original category show its subs categories in default
     if (values.category._id === e.target.value) {
