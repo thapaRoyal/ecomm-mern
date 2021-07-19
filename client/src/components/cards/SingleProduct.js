@@ -96,7 +96,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
           actions={[
             <Tooltip title={tooltip}>
               <a onClick={handleAddToCart}>
-                <ShoppingCartOutlined className="text-danger" /> Add to Cart
+                <ShoppingCartOutlined className="text-danger" />
+                <br />
+                Add to Cart
               </a>
             </Tooltip>,
 
