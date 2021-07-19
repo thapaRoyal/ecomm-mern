@@ -117,7 +117,7 @@ const ProductCardInCheckout = ({ p }) => {
           <select
             name="color"
             onChange={handleColorChange}
-            className="form-control"
+            className="form-control pointer"
           >
             {p.color ? (
               <option value={p.color}>{p.color}</option>
