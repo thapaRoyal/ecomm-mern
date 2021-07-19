@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = new mongoose.Schema();
+const { ObjectId } = mongoose.Schema;
 
 const cartSchema = new mongoose.Schema(
   {

@@ -6,9 +6,10 @@ const router = express.Router();
 const { authCheck } = require("../middlewares/authMiddleware");
 
 // controller
-const { userCart } = require("../controllers/user");
+const { userCart, getUserCart } = require("../controllers/user");
 
 // routes
-router.post("/cart", authCheck, userCart);
+router.post("/user/cart", authCheck, userCart); ///save cart
+router.get("/user/cart", authCheck, getUserCart); //get cart
 
 module.exports = router;

@@ -10,7 +10,7 @@ exports.userCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
 
   //   check if cart with logged in user id  exists
-  let cartExistByThisUser = await User.findOne({
+  let cartExistByThisUser = await Cart.findOne({
     orderdBy: user._id,
   }).exec();
 
@@ -27,10 +27,10 @@ exports.userCart = async (req, res) => {
     object.color = cart[i].color;
 
     // get price for creating tota;
-    let { price } = await Product.findbyId(cart[i]._id).select("price").exec();
+    let { price } = await Product.findById(cart[i]._id).select("price").exec();
     object.price = price;
 
-    product.push(object);
+    products.push(object);
   }
 
   //   console.log("PRODUCTS ", products);
@@ -43,8 +43,19 @@ exports.userCart = async (req, res) => {
   let newCart = await new Cart({
     products,
     cartTotal,
-    orderedBy: user._id,
+    orderdBy: user._id,
   }).save();
-  console.log("new cart", newCart);
+  console.log("new cart ----->", newCart);
   res.json({ ok: true });
+};
+
+exports.getUserCart = async (req, res) => {
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let cart = await Cart.findOne({ orderdBy: user._id })
+    .populate("products.product", "_id title price totalAfterDiscount")
+    .exec();
+
+  const { products, cartTotal, totalAfterDiscount } = cart;
+  res.json({ products, cartTotal, totalAfterDiscount });
 };
