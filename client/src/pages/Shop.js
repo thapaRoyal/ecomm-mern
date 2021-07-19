@@ -10,9 +10,11 @@ import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox, Radio } from "antd";
 import {
   AntDesignOutlined,
+  BgColorsOutlined,
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
+  TagsOutlined,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
 
@@ -37,6 +39,14 @@ const Shop = () => {
     "Dell",
   ]);
   const [brand, setBrand] = useState("");
+  const [colors, setColors] = useState([
+    "Black",
+    "White",
+    "Brown",
+    "Silver",
+    "Blue",
+  ]);
+  const [color, setColor] = useState("");
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -98,6 +108,7 @@ const Shop = () => {
     setStar("");
     setSub("");
     setBrand("");
+    setColor("");
 
     setTimeout(() => {
       setOk(!ok);
@@ -132,6 +143,8 @@ const Shop = () => {
     setPrice([0, 0]);
     setStar("");
     setSub("");
+    setColor("");
+
     setBrand("");
 
     // console.log(e.target.value);
@@ -166,6 +179,7 @@ const Shop = () => {
     setStar(num);
     setSub("");
     setBrand("");
+    setColor("");
 
     fetchProducts({
       stars: num,
@@ -206,6 +220,8 @@ const Shop = () => {
     setCategoryIds([]);
     setStar("");
     setBrand("");
+    setColor("");
+
     fetchProducts({
       sub,
     });
@@ -219,7 +235,7 @@ const Shop = () => {
         name={b}
         checked={b === brand}
         onChange={handleBrand}
-        className="pb-1  pr-4"
+        className="pb-2 pl-4 pr-4"
       >
         {b}
       </Radio>
@@ -235,10 +251,40 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setColor("");
     setBrand(e.target.value);
+
     fetchProducts({ brand: e.target.value });
   };
 
+  // 8. show products based on colors
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-2 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColor = (e) => {
+    setSub("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor(e.target.value);
+    fetchProducts({ color: e.target.value });
+  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -246,7 +292,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4", "5", "6"]} mode="inline">
             {/* price */}
             <SubMenu
               key="1"
@@ -267,6 +313,7 @@ const Shop = () => {
                 />
               </div>
             </SubMenu>
+
             {/* category */}
             <SubMenu
               key="2"
@@ -302,11 +349,11 @@ const Shop = () => {
               key="4"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Sub Categories
+                  <TagsOutlined /> Sub Categories
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pr-4 pl-4 pt-2">
+              <div style={{ marginTop: "-10px" }} className="pl-4 pt-2">
                 {/* {JSON.stringify(categories)} */}
                 {showSubs()}
               </div>
@@ -321,9 +368,23 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pr-5 pl-4 pt-2">
-                {/* {JSON.stringify(categories)} */}
+              <div style={{ marginTop: "-10px" }} className="pt-2 ">
                 {showBrands()}
+              </div>
+            </SubMenu>
+
+            {/* colors*/}
+            <SubMenu
+              key="6"
+              title={
+                <span className="h6">
+                  <BgColorsOutlined /> Colors
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pt-2">
+                {/* {JSON.stringify(categories)} */}
+                {showColors()}
               </div>
             </SubMenu>
           </Menu>
