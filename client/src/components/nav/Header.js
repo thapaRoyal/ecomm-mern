@@ -99,9 +99,31 @@ const Header = () => {
           </Item>
         )}
       </Menu>
-      <span className="search">
-        <Search />
-      </span>
+      {user && (
+        <span
+          style={{
+            float: "right",
+            top: "1px",
+            marginRight: "160px",
+            marginTop: "-48px",
+          }}
+        >
+          <Search />
+        </span>
+      )}
+
+      {!user && (
+        <span
+          style={{
+            float: "right",
+            top: "1px",
+            marginRight: "210px",
+            marginTop: "-48px",
+          }}
+        >
+          <Search />
+        </span>
+      )}
     </>
   );
 };
