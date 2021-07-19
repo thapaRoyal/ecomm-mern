@@ -105,7 +105,7 @@ const Header = () => {
             float: "right",
             top: "1px",
             marginRight: "160px",
-            marginTop: "-48px",
+            marginTop: "-40px",
           }}
         >
           <Search />
@@ -118,7 +118,7 @@ const Header = () => {
             float: "right",
             top: "1px",
             marginRight: "210px",
-            marginTop: "-48px",
+            marginTop: "-40px",
           }}
         >
           <Search />
