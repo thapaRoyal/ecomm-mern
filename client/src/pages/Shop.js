@@ -11,6 +11,7 @@ import { Menu, Slider, Checkbox, Radio } from "antd";
 import {
   AntDesignOutlined,
   BgColorsOutlined,
+  DeliveredProcedureOutlined,
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
@@ -47,6 +48,7 @@ const Shop = () => {
     "Blue",
   ]);
   const [color, setColor] = useState("");
+  const [shipping, setShipping] = useState("");
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -109,6 +111,7 @@ const Shop = () => {
     setSub("");
     setBrand("");
     setColor("");
+    setShipping("");
 
     setTimeout(() => {
       setOk(!ok);
@@ -144,6 +147,7 @@ const Shop = () => {
     setStar("");
     setSub("");
     setColor("");
+    setShipping("");
 
     setBrand("");
 
@@ -180,6 +184,7 @@ const Shop = () => {
     setSub("");
     setBrand("");
     setColor("");
+    setShipping("");
 
     fetchProducts({
       stars: num,
@@ -221,6 +226,7 @@ const Shop = () => {
     setStar("");
     setBrand("");
     setColor("");
+    setShipping("");
 
     fetchProducts({
       sub,
@@ -252,6 +258,8 @@ const Shop = () => {
     setCategoryIds([]);
     setStar("");
     setColor("");
+    setShipping("");
+
     setBrand(e.target.value);
 
     fetchProducts({ brand: e.target.value });
@@ -282,9 +290,50 @@ const Shop = () => {
     setCategoryIds([]);
     setStar("");
     setBrand("");
+    setShipping("");
     setColor(e.target.value);
     fetchProducts({ color: e.target.value });
   };
+
+  // 9. show products based on shiping
+  const showShipping = () => (
+    <>
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingChange}
+        value="Yes"
+        checked={shipping === "Yes"}
+      >
+        Yes
+      </Checkbox>
+
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingChange}
+        value="No"
+        checked={shipping === "No"}
+      >
+        No
+      </Checkbox>
+    </>
+  );
+
+  const handleShippingChange = (e) => {
+    setSub("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor("");
+    setShipping(e.target.value);
+    fetchProducts({ shipping: e.target.value });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -368,7 +417,7 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pt-2 ">
+              <div style={{ marginTop: "-10px" }} className="pr-5 pt-2 ">
                 {showBrands()}
               </div>
             </SubMenu>
@@ -382,9 +431,24 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pt-2">
+              <div style={{ marginTop: "-10px" }} className="pt-2 pr-5">
                 {/* {JSON.stringify(categories)} */}
                 {showColors()}
+              </div>
+            </SubMenu>
+
+            {/* colors*/}
+            <SubMenu
+              key="7"
+              title={
+                <span className="h6">
+                  <DeliveredProcedureOutlined /> Shipping
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pr-5 pt-2 pb-5">
+                {/* {JSON.stringify(categories)} */}
+                {showShipping()}
               </div>
             </SubMenu>
           </Menu>
