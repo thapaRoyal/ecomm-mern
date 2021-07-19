@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
             View Product
           </Link>,
           <>
-            <ShoppingCartOutlined className="text-danger" />, Add to Cart
+            <ShoppingCartOutlined className="text-danger" /> Add to Cart
           </>,
         ]}
       >

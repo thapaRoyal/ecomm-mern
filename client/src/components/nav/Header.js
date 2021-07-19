@@ -63,10 +63,6 @@ const Header = () => {
           <Link to="/shop">Shop </Link>
         </Item>
 
-        <Item className="ml-auto">
-          <Search />
-        </Item>
-
         {user && (
           <SubMenu
             key="submenu"
@@ -103,6 +99,9 @@ const Header = () => {
           </Item>
         )}
       </Menu>
+      <span className="float-right mr-5">
+        <Search />
+      </span>
     </>
   );
 };
