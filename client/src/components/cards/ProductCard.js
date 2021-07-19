@@ -69,7 +69,6 @@ const ProductCard = ({ product }) => {
             <a onClick={handleAddToCart}>
               <ShoppingCartOutlined className="text-danger" /> Add to Cart
             </a>
-            ,
           </Tooltip>,
         ]}
       >
