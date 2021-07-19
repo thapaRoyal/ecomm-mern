@@ -68,6 +68,31 @@ const ProductCardInCheckout = ({ p }) => {
     }
   };
 
+  // handle remove
+
+  const handleRemove = () => {
+    // console.log(p._id, "PRODUCT TO REMOVE");
+
+    let cart = [];
+
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      cart.map((product, i) => {
+        if (product._id === p._id) {
+          cart.splice(i, 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: cart,
+        });
+      });
+    }
+  };
+
   return (
     <tbody>
       <tr>
@@ -116,15 +141,18 @@ const ProductCardInCheckout = ({ p }) => {
             onChange={handleQuantityChange}
           />
         </td>
-        <td>
+        <td className="text-center">
           {p.shipping === "Yes" ? (
             <CheckCircleOutlined className="text-success" />
           ) : (
             <CloseCircleOutlined className="text-danger" />
           )}
         </td>
-        <td>
-          <CloseOutlined />
+        <td className="text-center">
+          <CloseOutlined
+            onClick={handleRemove}
+            className="text-danger pointer"
+          />
         </td>
       </tr>
     </tbody>
