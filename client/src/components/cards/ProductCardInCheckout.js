@@ -3,6 +3,11 @@ import ModalImage from "react-modal-image";
 import { useDispatch } from "react-redux";
 import Laptop from "../../images/laptop.png";
 import { toast } from "react-toastify";
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 
 const ProductCardInCheckout = ({ p }) => {
   const dispatch = useDispatch();
@@ -111,8 +116,16 @@ const ProductCardInCheckout = ({ p }) => {
             onChange={handleQuantityChange}
           />
         </td>
-        <td>Shipping</td>
-        <td>Delete Icon</td>
+        <td>
+          {p.shipping === "Yes" ? (
+            <CheckCircleOutlined className="text-success" />
+          ) : (
+            <CloseCircleOutlined className="text-danger" />
+          )}
+        </td>
+        <td>
+          <CloseOutlined />
+        </td>
       </tr>
     </tbody>
   );
