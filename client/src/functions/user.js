@@ -10,10 +10,3 @@ export const userCart = async (cart, authtoken) =>
       },
     }
   );
-
-export const getUserCart = async (authtoken) =>
-  await axios.get(`${process.env.REACT_APP_API}/user/cart`, {
-    headers: {
-      authtoken,
-    },
-  });
