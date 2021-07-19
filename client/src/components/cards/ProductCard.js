@@ -5,12 +5,17 @@ import laptop from "../../images/laptop.png";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/rating";
 import _ from "lodash";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   // state
   const [tooltip, setTooltip] = useState("Click to add");
+
+  // redux
+  const dispatch = useDispatch();
+  const { user, cart } = useSelector((state) => ({ ...state }));
 
   // cart
   const handleAddToCart = () => {
@@ -36,6 +41,12 @@ const ProductCard = ({ product }) => {
 
       // show tooltip
       setTooltip("Added");
+
+      // add to redux state
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
     }
   };
 
@@ -49,6 +60,7 @@ const ProductCard = ({ product }) => {
       ) : (
         <div className="text-center pt-1 pb-3">No rating yet</div>
       )}
+
       <Card
         hoverable
         cover={
@@ -65,6 +77,7 @@ const ProductCard = ({ product }) => {
             <br />
             View Product
           </Link>,
+
           <Tooltip title={tooltip}>
             <a onClick={handleAddToCart}>
               <ShoppingCartOutlined className="text-danger" /> Add to Cart
