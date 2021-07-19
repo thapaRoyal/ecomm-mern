@@ -99,7 +99,7 @@ const Header = () => {
           </Item>
         )}
       </Menu>
-      <span className="float-right mr-5">
+      <span className="search">
         <Search />
       </span>
     </>

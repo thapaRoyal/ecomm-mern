@@ -3,3 +3,9 @@
   height: 450px;
   object-fit: cover;
 }
+
+.search {
+  position: absolute;
+  margin-left: 1000px;
+  top: 1px;
+}
