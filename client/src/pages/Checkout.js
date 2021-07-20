@@ -18,7 +18,7 @@ const Checkout = () => {
   const [addressSaved, setAddressSaved] = useState(false);
 
   // discount price
-  const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
@@ -51,6 +51,8 @@ const Checkout = () => {
       .then((res) => {
         setProducts([]);
         setTotal(0);
+        setTotalAfterDiscount(0);
+        setCoupon("");
         toast.success("cart is empty. continue shopping");
       })
       .catch((err) => {
@@ -146,6 +148,12 @@ const Checkout = () => {
         {showProductSummary()}
         <hr />
         <p>Cart Total: $ {total}</p>
+
+        {totalAfterDiscount > 0 && (
+          <p className="bg-success p-2">
+            Discount applied : Total payable ${totalAfterDiscount}
+          </p>
+        )}
 
         <div className="row">
           <div className="col-md-6">
