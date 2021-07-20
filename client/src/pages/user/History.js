@@ -45,7 +45,7 @@ const History = () => {
             </td>
             <td>{p.product.price}</td>
             <td>{p.product.brand}</td>
-            <td>{p.product.color}</td>
+            <td>{p.color}</td>
             <td>{p.count}</td>
             <td>
               {p.product.shipping === "Yes" ? (
