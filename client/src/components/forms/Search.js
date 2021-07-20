@@ -24,7 +24,7 @@ const Search = () => {
   };
 
   return (
-    <form className="form-inline my-2 my-lg-0" onSubmit={handleSubmit}>
+    <form className="form-inline my-lg-0 mt-3" onSubmit={handleSubmit}>
       <input
         onChange={handleChange}
         type="search"

@@ -72,6 +72,10 @@ const Header = () => {
           </Link>
         </Item>
 
+        <Item key="search">
+          <Search />
+        </Item>
+
         {user && (
           <SubMenu
             key="submenu"
@@ -108,7 +112,8 @@ const Header = () => {
           </Item>
         )}
       </Menu>
-      {user && (
+
+      {/* {user && (
         <span
           style={{
             float: "right",
@@ -132,7 +137,7 @@ const Header = () => {
         >
           <Search />
         </span>
-      )}
+      )} */}
     </>
   );
 };
