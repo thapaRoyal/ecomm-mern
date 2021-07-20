@@ -8,6 +8,7 @@ import "react-quill/dist/quill.snow.css";
 const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [coupon, setCoupon] = useState("");
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
 
@@ -58,20 +59,57 @@ const Checkout = () => {
     });
   };
 
+  const applyDiscountCoupon = () => {
+    console.log("send coupon to backend", coupon);
+  };
+
+  const showAddress = () => (
+    <>
+      <ReactQuill theme="snow" value={address} onChange={setAddress} />
+      <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
+        Save
+      </button>
+    </>
+  );
+
+  const showProductSummary = () => (
+    <p>
+      {products.map((p, i) => (
+        <div key={i}>
+          <p>
+            {p.product.title} ({p.color}) X {p.count} =
+            {p.product.price * p.count}
+          </p>
+        </div>
+      ))}
+    </p>
+  );
+
+  const showApplyCoupon = () => (
+    <>
+      <input
+        type="text"
+        className="form-control"
+        onChange={(e) => setCoupon(e.target.value)}
+        value={coupon}
+      />
+      <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
+        Apply
+      </button>
+    </>
+  );
+
   return (
     <div className="row">
       <div className="col-md-6">
         <h4>Delivery Address</h4>
         <br />
         <br />
-        <ReactQuill theme="snow" value={address} onChange={setAddress} />
-        <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-          Save
-        </button>
+        {showAddress()}
         <hr />
         <h4>Got Coupon?</h4>
         <br />
-        coupon input and apply button
+        {showApplyCoupon()}
       </div>
 
       <div className="col-md-6">
@@ -79,22 +117,16 @@ const Checkout = () => {
         <hr />
         <p>Products {products.length}</p>
         <hr />
-        <p>
-          {products.map((p, i) => (
-            <div key={i}>
-              <p>
-                {p.product.title} ({p.color}) X {p.count} =
-                {p.product.price * p.count}
-              </p>
-            </div>
-          ))}
-        </p>
+        {showProductSummary()}
         <hr />
         <p>Cart Total: $ {total}</p>
 
         <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary" disabled={!addressSaved || !products.length}>
+            <button
+              className="btn btn-primary"
+              disabled={!addressSaved || !products.length}
+            >
               Place Order
             </button>
           </div>
