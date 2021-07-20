@@ -76,12 +76,20 @@ const Checkout = () => {
       console.log("RES ON COUPON APPLIED", res.data);
       if (res.data) {
         setTotalAfterDiscount(res.data);
-        // update redux coupon applied
+        // update redux coupon applied true / false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
       }
       // error
       if (res.data.err) {
         setDiscountError(res.data.err);
         // update redux coupon applied
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
       }
     });
   };
@@ -126,53 +134,55 @@ const Checkout = () => {
   );
 
   return (
-    <div className="row">
-      <div className="col-md-6">
-        <h4>Delivery Address</h4>
-        <br />
-        <br />
-        {showAddress()}
-        <hr />
-        <h4>Got Coupon?</h4>
-        <br />
-        {showApplyCoupon()}
-        <br />
-        {discountError && <p className="bg-danger p-2">{discountError}</p>}
-      </div>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-6">
+          <h4>Delivery Address</h4>
+          <br />
+          <br />
+          {showAddress()}
+          <hr />
+          <h4>Got Coupon?</h4>
+          <br />
+          {showApplyCoupon()}
+          <br />
+          {discountError && <p className="bg-danger p-2">{discountError}</p>}
+        </div>
 
-      <div className="col-md-6">
-        <h4>Order Summary</h4>
-        <hr />
-        <p>Products {products.length}</p>
-        <hr />
-        {showProductSummary()}
-        <hr />
-        <p>Cart Total: $ {total}</p>
+        <div className="col-md-6">
+          <h4>Order Summary</h4>
+          <hr />
+          <p>Products {products.length}</p>
+          <hr />
+          {showProductSummary()}
+          <hr />
+          <p>Cart Total: $ {total}</p>
 
-        {totalAfterDiscount > 0 && (
-          <p className="bg-success p-2">
-            Discount applied : Total payable ${totalAfterDiscount}
-          </p>
-        )}
+          {totalAfterDiscount > 0 && (
+            <p className="bg-success p-2">
+              Discount applied : Total payable ${totalAfterDiscount}
+            </p>
+          )}
 
-        <div className="row">
-          <div className="col-md-6">
-            <button
-              className="btn btn-primary"
-              disabled={!addressSaved || !products.length}
-            >
-              Place Order
-            </button>
-          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <button
+                className="btn btn-primary"
+                disabled={!addressSaved || !products.length}
+              >
+                Place Order
+              </button>
+            </div>
 
-          <div className="col-md-6">
-            <button
-              className="btn btn-primary"
-              disabled={!products.length}
-              onClick={emptyCart}
-            >
-              Empty Cart
-            </button>
+            <div className="col-md-6">
+              <button
+                className="btn btn-primary"
+                disabled={!products.length}
+                onClick={emptyCart}
+              >
+                Empty Cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
