@@ -74,7 +74,7 @@ export const getWishlist = async (authtoken) =>
 
 export const removeWishlist = async (productId, authtoken) =>
   await axios.put(
-    `${process.env.REACT_APP_API}/user/wishlist/:productId`,
+    `${process.env.REACT_APP_API}/user/wishlist/${productId}`,
     {},
     {
       headers: {
