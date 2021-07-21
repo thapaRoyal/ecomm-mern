@@ -17,6 +17,48 @@ const Invoice = ({ order }) => (
       <Text style={styles.title}>Order Invoice</Text>
       <Text style={styles.author}>Lapshop</Text>
       <Text style={styles.subtitle}>Order Summary</Text>
+
+      <Table>
+        <TableHeader>
+          <TableCell>Title</TableCell>
+          <TableCell>Price</TableCell>
+          <TableCell>Quantity</TableCell>
+          <TableCell>Brand</TableCell>
+          <TableCell>Color</TableCell>
+        </TableHeader>
+      </Table>
+
+      <Table data={order.products}>
+        <TableBody>
+          <DataTableCell getContent={(x) => x.product.title} />
+          <DataTableCell getContent={(x) => `$${x.product.title}`} />
+          <DataTableCell getContent={(x) => x.count} />
+          <DataTableCell getContent={(x) => x.product.brand} />
+          <DataTableCell getContent={(x) => x.product.color} />
+        </TableBody>
+      </Table>
+
+      <Text style={styles.text}>
+        <Text>
+          Date: {"               "}
+          {new Date(order.paymentIntent.created * 1000).toLocaleString()}
+        </Text>
+        {"\n"}
+        <Text>
+          Order Id: {"         "} {order.paymentIntent.id}
+        </Text>
+        {"\n"}
+
+        <Text>
+          Order Status: {"  "} {order.orderStatus}
+        </Text>
+        {"\n"}
+
+        <Text>
+          Total Paid: {"      "} {order.paymentIntent.amount}
+        </Text>
+      </Text>
+      <Text style={styles.footer}>~ Thank you for shopping with us ~</Text>
     </Page>
   </Document>
 );
