@@ -14,6 +14,7 @@ import {
   PDFDownloadLink,
   PDFViewer,
 } from "@react-pdf/renderer";
+import Invoice from "../../components/order/Invoice";
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -70,13 +71,7 @@ const History = () => {
 
   const showDownloadLink = (order) => (
     <PDFDownloadLink
-      document={
-        <Document>
-          <Page size="A4">
-            <View></View>
-          </Page>
-        </Document>
-      }
+      document={<Invoice order={order} />}
       fileName="invoice.pdf"
       className="btn btn-sm btn-block btn-outline-primary"
     >
