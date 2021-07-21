@@ -13,6 +13,9 @@ const {
   applyCouponToUserCart,
   createOrder,
   orders,
+  addToWishlist,
+  wishlist,
+  removeFromWishlist,
 } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart); // save cart
