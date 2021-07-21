@@ -26,6 +26,11 @@ router.get("/user/orders", authCheck, orders);
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
 
+// wishlist
+router.post("/user/wishlist", authCheck, addToWishlist);
+router.get("/user/wishlist", authCheck, wishlist);
+router.put("/user/wishlist/:productId", authCheck, removeFromWishlist);
+
 // router.get("/user", (req, res) => {
 //   res.json({
 //     data: "hey you hit user API endpoint",

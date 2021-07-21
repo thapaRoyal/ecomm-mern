@@ -26,7 +26,6 @@ const Orders = ({ orders, handleStatusChange }) => {
             <td>{p.color}</td>
             <td>{p.count}</td>
             <td>Shipping</td>
-
             {/* <td>
               {p.product.shipping === "Yes" ? (
                 <CheckCircleOutlined style={{ color: "green" }} />
