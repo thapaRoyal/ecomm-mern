@@ -4,6 +4,7 @@ import { getUserOrders } from "../../functions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -17,8 +18,6 @@ const History = () => {
     getUserOrders(user.token)
       .then((res) => {
         console.log(JSON.stringify(res.data, null, 4));
-        // console.log(res.data[0].products[0].product.title);
-        console.log(res.data.products);
         setOrders(res.data);
       })
       .catch((err) => {
@@ -62,15 +61,17 @@ const History = () => {
 
   const showEachOrders = () =>
     orders.map((order, i) => (
-      <div key={i} className="m-5 p-3 card ">
-        <p>Show payment info</p>
-        {showOrderInTable(order)}
-        <div className="row">
-          <div className="col">
-            <p>PDF download</p>
+      <>
+        <div key={i} className="m-5 p-3 card ">
+          <ShowPaymentInfo order={order} />
+          {showOrderInTable(order)}
+          <div className="row">
+            <div className="col">
+              <p>PDF download</p>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     ));
 
   return (
