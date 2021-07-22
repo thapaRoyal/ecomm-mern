@@ -11,6 +11,14 @@ require("dotenv").config();
 // app
 const app = express();
 
+// mongoose to connect to atlas
+//   .connect(process.env.MONGODB_CONNECTION_STRING, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("MongoDB has been connected"))
+//   .catch((err) => console.log(err));
+
 // connecting to  db using mongoose
 mongoose
   .connect(process.env.DATABASE, {
