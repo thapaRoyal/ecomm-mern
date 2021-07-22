@@ -10,7 +10,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import Header from "./components/nav/Header";
-import SideDrawer from "./components/drawer/SideDrawer";
+// import SideDrawer from "./components/drawer/SideDrawer";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -71,7 +71,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <SideDrawer />
+      {/* <SideDrawer /> */}
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
