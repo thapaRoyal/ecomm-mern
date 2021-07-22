@@ -18,6 +18,23 @@ const Cart = ({ history }) => {
 
   //   save order to data base
   const saveOrderToDb = () => {
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
+    // alert("sav order to db");
+    // console.log("cart", JSON.stringify(cart, null, 4));
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log("CART POST RESPONSE", res);
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log("CART SAVE ERR", err));
+    history.push("/checkout");
+  };
+
+  //   save order to data base
+  const saveCashOrderToDb = () => {
     // alert("sav order to db");
     // console.log("cart", JSON.stringify(cart, null, 4));
     userCart(cart, user.token)
@@ -80,13 +97,23 @@ const Cart = ({ history }) => {
           Total: <b>$ {getTotal()}</b>
           <hr />
           {user ? (
-            <button
-              onClick={saveOrderToDb}
-              className="btn btn-sm btn-primary mt-2"
-              disabled={!cart.length}
-            >
-              Proceed to checkout
-            </button>
+            <>
+              <button
+                onClick={saveCashOrderToDb}
+                className="btn btn-sm btn-warning mt-2"
+                disabled={!cart.length}
+              >
+                Pay cash on delivery
+              </button>
+              <br />
+              <button
+                onClick={saveOrderToDb}
+                className="btn btn-sm btn-primary mt-2"
+                disabled={!cart.length}
+              >
+                Proceed to checkout
+              </button>
+            </>
           ) : (
             <button className="btn btn-sm btn-primary mt-2">
               <Link
