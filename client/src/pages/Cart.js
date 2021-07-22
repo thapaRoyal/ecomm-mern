@@ -35,15 +35,17 @@ const Cart = ({ history }) => {
 
   //   save order to data base
   const saveCashOrderToDb = () => {
-    // alert("sav order to db");
     // console.log("cart", JSON.stringify(cart, null, 4));
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
     userCart(cart, user.token)
       .then((res) => {
-        console.log("CART POST RESPONSE", res);
+        console.log("CART POST RES", res);
         if (res.data.ok) history.push("/checkout");
       })
-      .catch((err) => console.log("CART SAVE ERR", err));
-    history.push("/checkout");
+      .catch((err) => console.log("cart save err", err));
   };
 
   // show cart items
