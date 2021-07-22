@@ -5,6 +5,7 @@ import {
   emptyUserCart,
   saveUserAddress,
   applyCoupon,
+  createCashOrderForUser,
 } from "../functions/user";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
@@ -22,7 +23,7 @@ const Checkout = ({ history }) => {
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, COD } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     getUserCart(user.token)
@@ -133,6 +134,14 @@ const Checkout = ({ history }) => {
     </>
   );
 
+  const createCashOrder = () => {
+    createCashOrderForUser(user.token).then((res) => {
+      console.log("USER CASH ORDER CREATED", res);
+
+      // empty cart from redux, local storage and reset COD, redirect
+    });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -166,13 +175,23 @@ const Checkout = ({ history }) => {
 
           <div className="row">
             <div className="col-md-6">
-              <button
-                className="btn btn-primary"
-                disabled={!addressSaved || !products.length}
-                onClick={() => history.push("/payment")}
-              >
-                Place Order
-              </button>
+              {COD ? (
+                <button
+                  className="btn btn-primary"
+                  disabled={!addressSaved || !products.length}
+                  onClick={createCashOrder}
+                >
+                  Place Order
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  disabled={!addressSaved || !products.length}
+                  onClick={() => history.push("/payment")}
+                >
+                  Place Order
+                </button>
+              )}
             </div>
 
             <div className="col-md-6">
