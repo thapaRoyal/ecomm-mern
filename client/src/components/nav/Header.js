@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Menu, Badge } from "antd";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Menu, Badge } from 'antd';
+import { Link } from 'react-router-dom';
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -9,12 +9,13 @@ import {
   LogoutOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
-} from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+} from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import firebase from "firebase";
-import Search from "../forms/Search";
+import { auth } from '../../firebase';
+
+import Search from '../forms/Search';
 
 // destructuring
 const { SubMenu, Item } = Menu;
@@ -22,12 +23,12 @@ const { SubMenu, Item } = Menu;
 // function
 const Header = () => {
   // state
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState('home');
 
   //dispatch an action to store
   let dispatch = useDispatch();
 
-  let history = useHistory();
+  let history = useNavigate();
 
   // get user from state
   let { user, cart } = useSelector((state) => ({ ...state }));
@@ -39,12 +40,12 @@ const Header = () => {
 
   // logout function
   const logout = () => {
-    firebase.auth().signOut();
+    auth().signOut();
     dispatch({
-      type: "LOGOUT",
+      type: 'LOGOUT',
       payload: null,
     });
-    history.push("/login");
+    history.push('/login');
   };
 
   return (
@@ -80,16 +81,16 @@ const Header = () => {
           <SubMenu
             key="submenu"
             icon={<SettingOutlined />}
-            title={user.email && user.email.split("@")[0]}
+            title={user.email && user.email.split('@')[0]}
             className="ml-auto"
           >
-            {user && user.role === "subscriber" && (
+            {user && user.role === 'subscriber' && (
               <Item>
                 <Link to="/user/history">Dashboard</Link>
               </Item>
             )}
 
-            {user && user.role === "admin" && (
+            {user && user.role === 'admin' && (
               <Item>
                 <Link to="/admin/dashboard">Dashboard</Link>
               </Item>

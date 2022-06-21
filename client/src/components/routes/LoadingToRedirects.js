@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { LoadingOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const LoadingToRedirects = () => {
   const [count, setCount] = useState(5);
-  let history = useHistory();
+  let history = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCount((currentCount) => --currentCount);
     }, 1000);
     // redirect once count is equal to 0
-    count === 0 && history.push("/");
+    count === 0 && history.push('/');
 
     // cleanup
     return () => clearInterval(interval);

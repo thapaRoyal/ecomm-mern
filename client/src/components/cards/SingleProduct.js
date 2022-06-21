@@ -1,41 +1,41 @@
-import React, { useState } from "react";
-import { Card, Tabs, Tooltip } from "antd";
-import { Link } from "react-router-dom";
-import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Laptop from "../../images/laptop.png";
-import ProductListItems from "./ProductListItems";
-import StarRating from "react-star-ratings";
-import RatingModal from "../modal/ratingModal";
-import { showAverage } from "../../functions/rating";
-import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import { addToWishlist } from "../../functions/user";
-import { toast } from "react-toastify";
-import { useHistory } from "react-router";
+import React, { useState } from 'react';
+import { Card, Tabs, Tooltip } from 'antd';
+import { Link } from 'react-router-dom';
+import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Laptop from '../../images/laptop.png';
+import ProductListItems from './ProductListItems';
+import StarRating from 'react-star-ratings';
+import RatingModal from '../modal/ratingModal';
+import { showAverage } from '../../functions/rating';
+import _ from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWishlist } from '../../functions/user';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const { TabPane } = Tabs;
 
 // this is children component of product page
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, images, description, _id } = product;
-  const [tooltip, setTooltip] = useState("Add to cart");
+  const [tooltip, setTooltip] = useState('Add to cart');
 
   // redux
   const dispatch = useDispatch();
   const { user, cart } = useSelector((state) => ({ ...state }));
   // router
-  let history = useHistory();
+  let history = useNavigate();
 
   // cart
   const handleAddToCart = () => {
     // create cart array
     let cart = [];
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       // if cart is in local storage GET it
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"));
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'));
       }
       // push new product to cart
       cart.push({
@@ -48,19 +48,19 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
       // save to local storage
       // console.log("unique: ", unique);
-      localStorage.setItem("cart", JSON.stringify(unique));
+      localStorage.setItem('cart', JSON.stringify(unique));
 
       // show tooltip
-      setTooltip("Added");
+      setTooltip('Added');
 
       // add to redux state
       dispatch({
-        type: "ADD_TO_CART",
+        type: 'ADD_TO_CART',
         payload: unique,
       });
       // show cart items in side drawer
       dispatch({
-        type: "SET_VISIBLE",
+        type: 'SET_VISIBLE',
         payload: true,
       });
     }
@@ -69,9 +69,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     addToWishlist(product._id, user.token).then((res) => {
-      console.log("Add to wishlist", res.data);
-      toast.success("Added to  wishlist");
-      history.push("/user/wishlist");
+      console.log('Add to wishlist', res.data);
+      toast.success('Added to  wishlist');
+      history.push('/user/wishlist');
     });
   };
 
@@ -112,7 +112,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
               <a onClick={handleAddToCart} disabled={product.quantity < 1}>
                 <ShoppingCartOutlined className="text-danger" />
                 <br />
-                {product.quantity < 1 ? "Out of stock" : "Add to cart"}
+                {product.quantity < 1 ? 'Out of stock' : 'Add to cart'}
               </a>
             </Tooltip>,
             <a onClick={handleAddToWishlist}>
