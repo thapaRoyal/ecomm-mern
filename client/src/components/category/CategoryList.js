@@ -1,4 +1,3 @@
-import { LoadingOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getCategories } from "../../functions/category";
@@ -28,7 +27,11 @@ const CategoryList = () => {
   return (
     <div className="container">
       <div className="row">
-        {loading ? <LoadingOutlined className="h1" /> : showCategories()}
+        {loading ? (
+          <h4 className="text-center">Loading...</h4>
+        ) : (
+          showCategories()
+        )}
       </div>
     </div>
   );

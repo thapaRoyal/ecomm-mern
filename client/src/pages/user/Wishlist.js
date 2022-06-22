@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserNav from "../../components/nav/UserNav";
 import { getWishlist, removeWishlist } from "../../functions/user";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,33 +13,32 @@ const Wishlist = () => {
     loadWishlist();
   }, []);
 
-  const loadWishlist = () => {
+  const loadWishlist = () =>
     getWishlist(user.token).then((res) => {
+      // console.log(res);
       setWishlist(res.data.wishlist);
     });
-  };
 
-  const handleRemove = (productId) => {
+  const handleRemove = (productId) =>
     removeWishlist(productId, user.token).then((res) => {
       loadWishlist();
     });
-  };
 
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col md-2">
+        <div className="col-md-2">
           <UserNav />
         </div>
-        <div className="col-md-10">
+        <div className="col">
           <h4>Wishlist</h4>
 
           {wishlist.map((p) => (
             <div key={p._id} className="alert alert-secondary">
               <Link to={`/product/${p.slug}`}>{p.title}</Link>
               <span
-                className="btn btn-sm float-right"
                 onClick={() => handleRemove(p._id)}
+                className="btn btn-sm float-right"
               >
                 <DeleteOutlined className="text-danger" />
               </span>

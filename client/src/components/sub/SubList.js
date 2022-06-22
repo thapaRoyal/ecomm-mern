@@ -1,4 +1,3 @@
-import { LoadingOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getSubs } from "../../functions/sub";
@@ -28,7 +27,7 @@ const SubList = () => {
   return (
     <div className="container">
       <div className="row">
-        {loading ? <LoadingOutlined className="h1" /> : showSubs()}
+        {loading ? <h4 className="text-center">Loading...</h4> : showSubs()}
       </div>
     </div>
   );

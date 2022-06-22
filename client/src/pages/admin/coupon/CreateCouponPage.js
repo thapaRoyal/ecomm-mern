@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
@@ -7,16 +7,15 @@ import {
   removeCoupon,
   createCoupon,
 } from "../../../functions/coupon";
-
 import "react-datepicker/dist/react-datepicker.css";
-import { DeleteOutlined, LoadingOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import AdminNav from "../../../components/nav/AdminNav";
 
 const CreateCouponPage = () => {
   const [name, setName] = useState("");
   const [expiry, setExpiry] = useState("");
   const [discount, setDiscount] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState("");
   const [coupons, setCoupons] = useState([]);
 
   // redux
@@ -31,27 +30,27 @@ const CreateCouponPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    // console.log(name, expiry, discount);
+    // console.table(name, expiry, discount);
     createCoupon({ name, expiry, discount }, user.token)
       .then((res) => {
         setLoading(false);
+        loadAllCoupons(); // load all coupons
         setName("");
-        loadAllCoupons();
         setDiscount("");
         setExpiry("");
         toast.success(`"${res.data.name}" is created`);
       })
-      .catch((err) => console.log("CREATE COUPON ERROR", err));
+      .catch((err) => console.log("create coupon err", err));
   };
 
   const handleRemove = (couponId) => {
-    if (window.confirm("Delete coupon ?")) {
+    if (window.confirm("Delete?")) {
       setLoading(true);
       removeCoupon(couponId, user.token)
         .then((res) => {
-          loadAllCoupons();
+          loadAllCoupons(); // load all coupons
           setLoading(false);
-          toast.error(`"${res.data.name}" is deleted`);
+          toast.error(`Coupon "${res.data.name}" deleted`);
         })
         .catch((err) => console.log(err));
     }
@@ -64,7 +63,11 @@ const CreateCouponPage = () => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          {loading ? <LoadingOutlined /> : <h4>Coupons</h4>}
+          {loading ? (
+            <h4 className="text-danger">Loading...</h4>
+          ) : (
+            <h4>Coupon</h4>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -97,16 +100,19 @@ const CreateCouponPage = () => {
                 className="form-control"
                 selected={new Date()}
                 value={expiry}
-                required
                 onChange={(date) => setExpiry(date)}
+                required
               />
             </div>
-            <button className="btn btn-primary">Save</button>
+
+            <button className="btn btn-outline-primary">Save</button>
           </form>
+
           <br />
+
           <h4>{coupons.length} Coupons</h4>
 
-          <table className="table  table-bordered">
+          <table className="table table-bordered">
             <thead className="thead-light">
               <tr>
                 <th scope="col">Name</th>
@@ -121,11 +127,11 @@ const CreateCouponPage = () => {
                 <tr key={c._id}>
                   <td>{c.name}</td>
                   <td>{new Date(c.expiry).toLocaleDateString()}</td>
-                  <td>{c.discount} %</td>
+                  <td>{c.discount}%</td>
                   <td>
                     <DeleteOutlined
-                      className="text-danger pointer"
                       onClick={() => handleRemove(c._id)}
+                      className="text-danger pointer"
                     />
                   </td>
                 </tr>

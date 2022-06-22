@@ -18,7 +18,7 @@ const initialState = {
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus", "Dell"],
+  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
   color: "",
   brand: "",
 };
@@ -26,15 +26,13 @@ const initialState = {
 const ProductUpdate = ({ match, history }) => {
   // state
   const [values, setValues] = useState(initialState);
-  const [subOptions, setSubOptions] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [subOptions, setSubOptions] = useState([]);
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // redux
   const { user } = useSelector((state) => ({ ...state }));
-
   // router
   const { slug } = match.params;
 
@@ -45,31 +43,30 @@ const ProductUpdate = ({ match, history }) => {
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
-      // console.log("SINGLE PRODUCT", p);
-      // load single product
+      // console.log("single product", p);
+      // 1 load single proudct
       setValues({ ...values, ...p.data });
-
-      // load single product category subs
+      // 2 load single product category subs
       getCategorySubs(p.data.category._id).then((res) => {
-        setSubOptions(res.data); //on first load , show default subs
+        setSubOptions(res.data); // on first load, show default subs
       });
-      // prepare array of sub ids to show as default sub values in antd Select
+      // 3 prepare array of sub ids to show as default sub values in antd Select
       let arr = [];
       p.data.subs.map((s) => {
         arr.push(s._id);
       });
-      // console.log("ARR", arr);
-      setArrayOfSubs((prev) => arr); //required for antd Select to work
+      console.log("ARR", arr);
+      setArrayOfSubs((prev) => arr); // required for ant design select to work
     });
   };
 
   const loadCategories = () =>
-    getCategories().then((cat) =>
-      // setValues({ ...values, categories: cat.data })
-      setCategories(cat.data)
-    );
+    getCategories().then((c) => {
+      console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
+      setCategories(c.data);
+    });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -79,7 +76,7 @@ const ProductUpdate = ({ match, history }) => {
     updateProduct(slug, values, user.token)
       .then((res) => {
         setLoading(false);
-        toast.success(`"${res.data.title}" is updated `);
+        toast.success(`"${res.data.title}" is updated`);
         history.push("/admin/products");
       })
       .catch((err) => {
@@ -96,23 +93,23 @@ const ProductUpdate = ({ match, history }) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    // console.log("CLICKED CATEGORY", e.target.value);
+    console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [] });
 
     setSelectedCategory(e.target.value);
 
     getCategorySubs(e.target.value).then((res) => {
-      // console.log("SUB OPTIONS ON CATEGORY CLICKED", res);
+      console.log("SUB OPTIONS ON CATGORY CLICK", res);
       setSubOptions(res.data);
     });
 
-    // console.log("EXISTING CATEGORY values.category", values.category);
+    console.log("EXISTING CATEGORY values.category", values.category);
 
-    // if user clicks back to the original category show its subs categories in default
+    // if user clicks back to the original category
+    // show its sub categories in default
     if (values.category._id === e.target.value) {
       loadProduct();
     }
-
     // clear old sub category ids
     setArrayOfSubs([]);
   };
@@ -123,13 +120,15 @@ const ProductUpdate = ({ match, history }) => {
         <div className="col-md-2">
           <AdminNav />
         </div>
+
         <div className="col-md-10">
           {loading ? (
-            <LoadingOutlined className="h1" />
+            <LoadingOutlined className="text-danger h1" />
           ) : (
-            <h4>Update Product</h4>
+            <h4>Product update</h4>
           )}
-          {/* {JSON.stringify(values.slug)} */}
+
+          {/* {JSON.stringify(values)} */}
 
           <div className="p-3">
             <FileUpload
@@ -142,8 +141,8 @@ const ProductUpdate = ({ match, history }) => {
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
-            values={values}
             setValues={setValues}
+            values={values}
             handleCategoryChange={handleCategoryChange}
             categories={categories}
             subOptions={subOptions}

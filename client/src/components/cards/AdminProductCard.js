@@ -12,10 +12,8 @@ const AdminProductCard = ({ product, handleRemove }) => {
 
   return (
     <Card
-      hoverable
       cover={
         <img
-          alt=""
           src={images && images.length ? images[0].url : laptop}
           style={{ height: "150px", objectFit: "cover" }}
           className="p-1"
@@ -23,11 +21,11 @@ const AdminProductCard = ({ product, handleRemove }) => {
       }
       actions={[
         <Link to={`/admin/product/${slug}`}>
-          <EditOutlined className="text-primary" />
+          <EditOutlined className="text-warning" />
         </Link>,
         <DeleteOutlined
-          className="text-danger"
           onClick={() => handleRemove(slug)}
+          className="text-danger"
         />,
       ]}
     >

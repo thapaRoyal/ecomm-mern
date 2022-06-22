@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { getSub, updateSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
-
-import { LoadingOutlined } from "@ant-design/icons";
+import { updateSub, getSub } from "../../../functions/sub";
+import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const SubUpdate = ({ match, history }) => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -22,29 +23,29 @@ const SubUpdate = ({ match, history }) => {
   }, []);
 
   const loadCategories = () =>
-    getCategories().then((cat) => setCategories(cat.data));
+    getCategories().then((c) => setCategories(c.data));
 
   const loadSub = () =>
-    getSub(match.params.slug).then((sub) => {
-      setName(sub.data.name);
-      setParent(sub.data.parent);
+    getSub(match.params.slug).then((s) => {
+      setName(s.data.name);
+      setParent(s.data.parent);
     });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(name);
     setLoading(true);
     updateSub(match.params.slug, { name, parent }, user.token)
       .then((res) => {
+        // console.log(res)
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is updated`);
         history.push("/admin/sub");
       })
-
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setName("");
         if (err.response.status === 400) toast.error(err.response.data);
       });
   };
@@ -57,26 +58,23 @@ const SubUpdate = ({ match, history }) => {
         </div>
         <div className="col">
           {loading ? (
-            <LoadingOutlined className="h1" />
+            <h4 className="text-danger">Loading..</h4>
           ) : (
-            <h4>Update Sub Category</h4>
+            <h4>Update sub category</h4>
           )}
 
           <div className="form-group">
+            <label>Parent category</label>
             <select
               name="category"
               className="form-control"
               onChange={(e) => setParent(e.target.value)}
             >
-              <option>Select a category</option>
+              <option>Please select</option>
               {categories.length > 0 &&
-                categories.map((cat) => (
-                  <option
-                    key={cat._id}
-                    value={cat._id}
-                    selected={cat._id === parent}
-                  >
-                    {cat.name}
+                categories.map((c) => (
+                  <option key={c._id} value={c._id} selected={c._id === parent}>
+                    {c.name}
                   </option>
                 ))}
             </select>

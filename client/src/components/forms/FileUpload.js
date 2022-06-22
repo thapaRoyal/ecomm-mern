@@ -8,9 +8,9 @@ const FileUpload = ({ values, setValues, setLoading }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const fileUploadAndResize = (e) => {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     // resize
-    let files = e.target.files;
+    let files = e.target.files; // 3
     let allUploadedFiles = values.images;
 
     if (files) {
@@ -28,9 +28,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
             axios
               .post(
                 `${process.env.REACT_APP_API}/uploadimages`,
-                {
-                  image: uri,
-                },
+                { image: uri },
                 {
                   headers: {
                     authtoken: user ? user.token : "",
@@ -38,29 +36,28 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 }
               )
               .then((res) => {
-                console.log("IMAGE UPLOAD RESPONSE DATA", res);
+                console.log("IMAGE UPLOAD RES DATA", res);
                 setLoading(false);
                 allUploadedFiles.push(res.data);
+
                 setValues({ ...values, images: allUploadedFiles });
               })
               .catch((err) => {
                 setLoading(false);
-                console.log("CLOUDINARY UPLOAD ERROR", err);
+                console.log("CLOUDINARY UPLOAD ERR", err);
               });
           },
           "base64"
         );
       }
     }
-
     // send back to server to upload to cloudinary
-
-    // set url to images[] in the parent component - ProductCreate
+    // set url to images[] in the parent component state - ProductCreate
   };
 
   const handleImageRemove = (public_id) => {
     setLoading(true);
-    console.log("REMOVE IMAGE", public_id);
+    // console.log("remove image", public_id);
     axios
       .post(
         `${process.env.REACT_APP_API}/removeimage`,
@@ -97,7 +94,6 @@ const FileUpload = ({ values, setValues, setLoading }) => {
               style={{ cursor: "pointer" }}
             >
               <Avatar
-                key={image.public_id}
                 src={image.url}
                 size={100}
                 shape="square"
@@ -106,10 +102,9 @@ const FileUpload = ({ values, setValues, setLoading }) => {
             </Badge>
           ))}
       </div>
-
       <div className="row">
         <label className="btn btn-primary btn-raised mt-3">
-          Choose file
+          Choose File
           <input
             type="file"
             multiple

@@ -1,7 +1,7 @@
 import React from "react";
 import ModalImage from "react-modal-image";
+import laptop from "../../images/laptop.png";
 import { useDispatch } from "react-redux";
-import Laptop from "../../images/laptop.png";
 import { toast } from "react-toastify";
 import {
   CheckCircleOutlined,
@@ -10,25 +10,25 @@ import {
 } from "@ant-design/icons";
 
 const ProductCardInCheckout = ({ p }) => {
-  const dispatch = useDispatch();
-
-  const colors = ["Black", "White", "Brown", "Silver", "Blue"];
+  const colors = ["Black", "Brown", "Silver", "White", "Blue"];
+  let dispatch = useDispatch();
 
   const handleColorChange = (e) => {
-    // console.log("COLOR CHANGED", e.target.value);
+    console.log("color changed", e.target.value);
 
     let cart = [];
-
     if (typeof window !== "undefined") {
       if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
+
       cart.map((product, i) => {
         if (product._id === p._id) {
           cart[i].color = e.target.value;
         }
       });
-      console.log("CART UPDATE COLOR", cart);
+
+      //  console.log('cart udpate color', cart)
       localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({
         type: "ADD_TO_CART",
@@ -37,14 +37,12 @@ const ProductCardInCheckout = ({ p }) => {
     }
   };
 
-  // handle qty changes
   const handleQuantityChange = (e) => {
-    // console.log("AVAILABLE QUANTITY", p.quantity);
-
+    // console.log("available quantity", p.quantity);
     let count = e.target.value < 1 ? 1 : e.target.value;
 
     if (count > p.quantity) {
-      toast.error(`Max available quantity:  ${p.quantity}`);
+      toast.error(`Max available quantity: ${p.quantity}`);
       return;
     }
 
@@ -54,41 +52,40 @@ const ProductCardInCheckout = ({ p }) => {
       if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
+
       cart.map((product, i) => {
-        if (product._id === p._id) {
+        if (product._id == p._id) {
           cart[i].count = count;
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+      });
 
-        dispatch({
-          type: "ADD_TO_CART",
-          payload: cart,
-        });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: cart,
       });
     }
   };
 
-  // handle remove
-
   const handleRemove = () => {
-    // console.log(p._id, "PRODUCT TO REMOVE");
-
+    // console.log(p._id, "to remove");
     let cart = [];
 
     if (typeof window !== "undefined") {
       if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
+      // [1,2,3,4,5]
       cart.map((product, i) => {
         if (product._id === p._id) {
           cart.splice(i, 1);
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+      });
 
-        dispatch({
-          type: "ADD_TO_CART",
-          payload: cart,
-        });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: cart,
       });
     }
   };
@@ -97,27 +94,22 @@ const ProductCardInCheckout = ({ p }) => {
     <tbody>
       <tr>
         <td>
-          <div
-            style={{
-              width: "100px",
-              height: "auto",
-            }}
-          >
+          <div style={{ width: "100px", height: "auto" }}>
             {p.images.length ? (
               <ModalImage small={p.images[0].url} large={p.images[0].url} />
             ) : (
-              <ModalImage small={Laptop} large={Laptop} />
+              <ModalImage small={laptop} large={laptop} />
             )}
           </div>
         </td>
         <td>{p.title}</td>
-        <td>$ {p.price}</td>
+        <td>${p.price}</td>
         <td>{p.brand}</td>
         <td>
           <select
-            name="color"
             onChange={handleColorChange}
-            className="form-control pointer"
+            name="color"
+            className="form-control"
           >
             {p.color ? (
               <option value={p.color}>{p.color}</option>
@@ -127,7 +119,7 @@ const ProductCardInCheckout = ({ p }) => {
             {colors
               .filter((c) => c !== p.color)
               .map((c) => (
-                <option value={c} key={c}>
+                <option key={c} value={c}>
                   {c}
                 </option>
               ))}

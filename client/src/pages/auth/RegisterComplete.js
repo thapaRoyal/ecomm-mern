@@ -1,57 +1,51 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const RegisterComplete = ({ history }) => {
-  // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //  taking current state from store and returing new state
   // const { user } = useSelector((state) => ({ ...state }));
-
   let dispatch = useDispatch();
 
   useEffect(() => {
-    //   get email from localStorage
     setEmail(window.localStorage.getItem("emailForRegistration"));
-  }, []);
+    // console.log(window.location.href);
+    // console.log(window.localStorage.getItem("emailForRegistration"));
+  }, [history]);
 
-  // handle submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // validation
-
     if (!email || !password) {
-      toast.error("Email and password are required !");
+      toast.error("Email and password is required");
       return;
     }
 
     if (password.length < 6) {
-      toast.error("Password must be of at least 6 characters");
+      toast.error("Password must be at least 6 characters long");
       return;
     }
 
-    // try catch block
     try {
       const result = await auth.signInWithEmailLink(
         email,
         window.location.href
       );
-
+      //   console.log("RESULT", result);
       if (result.user.emailVerified) {
-        //   remove user email from local storage
+        // remove user email fom local storage
         window.localStorage.removeItem("emailForRegistration");
-
-        // get user id token , user and update password
+        // get user id token
         let user = auth.currentUser;
         await user.updatePassword(password);
         const idTokenResult = await user.getIdTokenResult();
         // redux store
+        console.log("user", user, "idTokenResult", idTokenResult);
+
         createOrUpdateUser(idTokenResult.token)
           .then((res) => {
             dispatch({
@@ -69,20 +63,17 @@ const RegisterComplete = ({ history }) => {
 
         // redirect
         history.push("/");
-        toast.success("Registered successfully");
       }
     } catch (error) {
-      //   toast.error(error.message);
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
-  // register complete form
   const completeRegistrationForm = () => (
     <form onSubmit={handleSubmit}>
-      <br />
       <input type="email" className="form-control" value={email} disabled />
 
-      <br />
       <input
         type="password"
         className="form-control"
@@ -91,8 +82,8 @@ const RegisterComplete = ({ history }) => {
         placeholder="Password"
         autoFocus
       />
-
-      <button type="submit" className="btn btn-raised mt-3">
+      <br />
+      <button type="submit" className="btn btn-raised">
         Complete Registration
       </button>
     </form>
@@ -102,7 +93,7 @@ const RegisterComplete = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <h4>Complete Registration</h4>
+          <h4>Register Complete</h4>
           {completeRegistrationForm()}
         </div>
       </div>

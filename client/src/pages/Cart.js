@@ -5,35 +5,25 @@ import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 import { userCart } from "../functions/user";
 
 const Cart = ({ history }) => {
-  // redux
   const { cart, user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
-  //   get total price
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
     }, 0);
   };
 
-  //   save order to data base
   const saveOrderToDb = () => {
-    dispatch({
-      type: "COD",
-      payload: true,
-    });
-    // alert("sav order to db");
     // console.log("cart", JSON.stringify(cart, null, 4));
     userCart(cart, user.token)
       .then((res) => {
-        console.log("CART POST RESPONSE", res);
+        console.log("CART POST RES", res);
         if (res.data.ok) history.push("/checkout");
       })
-      .catch((err) => console.log("CART SAVE ERR", err));
-    history.push("/checkout");
+      .catch((err) => console.log("cart save err", err));
   };
 
-  //   save order to data base
   const saveCashOrderToDb = () => {
     // console.log("cart", JSON.stringify(cart, null, 4));
     dispatch({
@@ -48,7 +38,6 @@ const Cart = ({ history }) => {
       .catch((err) => console.log("cart save err", err));
   };
 
-  // show cart items
   const showCartItems = () => (
     <table className="table table-bordered">
       <thead className="thead-light">
@@ -63,6 +52,7 @@ const Cart = ({ history }) => {
           <th scope="col">Remove</th>
         </tr>
       </thead>
+
       {cart.map((p) => (
         <ProductCardInCheckout key={p._id} p={p} />
       ))}
@@ -72,13 +62,12 @@ const Cart = ({ history }) => {
   return (
     <div className="container-fluid pt-2">
       <div className="row">
-        <h4 className="pl-2">Cart / {cart.length} Product</h4>
-      </div>
-      <div className="row">
         <div className="col-md-8">
+          <h4>Cart / {cart.length} Product</h4>
+
           {!cart.length ? (
             <p>
-              No products in cart. <Link to="/shop">Continue shopping</Link>
+              No products in cart. <Link to="/shop">Continue Shopping.</Link>
             </p>
           ) : (
             showCartItems()
@@ -88,32 +77,32 @@ const Cart = ({ history }) => {
           <h4>Order Summary</h4>
           <hr />
           <p>Products</p>
-          {cart.map((c, index) => (
-            <div key={index}>
+          {cart.map((c, i) => (
+            <div key={i}>
               <p>
-                {c.title} X {c.count} =$ {c.price * c.count}
+                {c.title} x {c.count} = ${c.price * c.count}
               </p>
             </div>
           ))}
           <hr />
-          Total: <b>$ {getTotal()}</b>
+          Total: <b>${getTotal()}</b>
           <hr />
           {user ? (
             <>
-              <button
-                onClick={saveCashOrderToDb}
-                className="btn btn-sm btn-warning mt-2"
-                disabled={!cart.length}
-              >
-                Pay cash on delivery
-              </button>
-              <br />
               <button
                 onClick={saveOrderToDb}
                 className="btn btn-sm btn-primary mt-2"
                 disabled={!cart.length}
               >
-                Proceed to checkout
+                Proceed to Checkout
+              </button>
+              <br />
+              <button
+                onClick={saveCashOrderToDb}
+                className="btn btn-sm btn-warning mt-2"
+                disabled={!cart.length}
+              >
+                Pay Cash on Delivery
               </button>
             </>
           ) : (
@@ -124,7 +113,7 @@ const Cart = ({ history }) => {
                   state: { from: "cart" },
                 }}
               >
-                Login to checkout
+                Login to Checkout
               </Link>
             </button>
           )}

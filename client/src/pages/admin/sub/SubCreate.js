@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { createSub, getSubs, getSub, removeSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
-
-import { LoadingOutlined } from "@ant-design/icons";
+import { createSub, getSub, removeSub, getSubs } from "../../../functions/sub";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
@@ -17,10 +15,9 @@ const SubCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [subs, setSubs] = useState([]);
   const [category, setCategory] = useState("");
-
-  // searching / filtering
+  const [subs, setSubs] = useState([]);
+  // step 1
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
@@ -29,15 +26,17 @@ const SubCreate = () => {
   }, []);
 
   const loadCategories = () =>
-    getCategories().then((cat) => setCategories(cat.data));
+    getCategories().then((c) => setCategories(c.data));
 
-  const loadSubs = () => getSubs().then((sub) => setSubs(sub.data));
+  const loadSubs = () => getSubs().then((s) => setSubs(s.data));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(name);
     setLoading(true);
     createSub({ name, parent: category }, user.token)
       .then((res) => {
+        // console.log(res)
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is created`);
@@ -46,18 +45,19 @@ const SubCreate = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setName("");
         if (err.response.status === 400) toast.error(err.response.data);
       });
   };
 
   const handleRemove = async (slug) => {
-    if (window.confirm("Are you sure you want to delete ?")) {
+    // let answer = window.confirm("Delete?");
+    // console.log(answer, slug);
+    if (window.confirm("Delete?")) {
       setLoading(true);
       removeSub(slug, user.token)
         .then((res) => {
           setLoading(false);
-          toast.error(`"${res.data.name}" is deleted`);
+          toast.error(`${res.data.name} deleted`);
           loadSubs();
         })
         .catch((err) => {
@@ -69,8 +69,8 @@ const SubCreate = () => {
     }
   };
 
-  const searched = (keyword) => (cat) =>
-    cat.name.toLowerCase().includes(keyword);
+  // step 4
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
   return (
     <div className="container-fluid">
@@ -80,24 +80,23 @@ const SubCreate = () => {
         </div>
         <div className="col">
           {loading ? (
-            <LoadingOutlined className="h1" />
+            <h4 className="text-danger">Loading..</h4>
           ) : (
-            <h4>Create Sub Category</h4>
+            <h4>Create sub category</h4>
           )}
 
-          {/* {JSON.stringify(category)} */}
-
           <div className="form-group">
+            <label>Parent category</label>
             <select
               name="category"
               className="form-control"
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option>Select a category</option>
+              <option>Please select</option>
               {categories.length > 0 &&
-                categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
+                categories.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name}
                   </option>
                 ))}
             </select>
@@ -109,18 +108,20 @@ const SubCreate = () => {
             setName={setName}
           />
 
-          <LocalSearch setKeyword={setKeyword} keyword={keyword} />
+          {/* step 2 and step 3 */}
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
-          {subs.filter(searched(keyword)).map((sub) => (
-            <div className="alert alert-secondary" key={sub._id}>
-              {sub.name}
+          {/* step 5 */}
+          {subs.filter(searched(keyword)).map((s) => (
+            <div className="alert alert-secondary" key={s._id}>
+              {s.name}
               <span
-                onClick={() => handleRemove(sub.slug)}
+                onClick={() => handleRemove(s.slug)}
                 className="btn btn-sm float-right"
               >
                 <DeleteOutlined className="text-danger" />
               </span>
-              <Link to={`/admin/sub/${sub.slug}`}>
+              <Link to={`/admin/sub/${s.slug}`}>
                 <span className="btn btn-sm float-right">
                   <EditOutlined className="text-warning" />
                 </span>

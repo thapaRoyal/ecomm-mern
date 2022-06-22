@@ -4,7 +4,7 @@ import ShowPaymentInfo from "../cards/ShowPaymentInfo";
 
 const Orders = ({ orders, handleStatusChange }) => {
   const showOrderInTable = (order) => (
-    <table className="table  table-bordered">
+    <table className="table table-bordered">
       <thead className="thead-light">
         <tr>
           <th scope="col">Title</th>
@@ -15,24 +15,24 @@ const Orders = ({ orders, handleStatusChange }) => {
           <th scope="col">Shipping</th>
         </tr>
       </thead>
+
       <tbody>
         {order.products.map((p, i) => (
           <tr key={i}>
             <td>
-              <b>title</b>
+              <b>{p.product.title}</b>
             </td>
-            <td>price</td>
-            <td>brand</td>
+            <td>{p.product.price}</td>
+            <td>{p.product.brand}</td>
             <td>{p.color}</td>
             <td>{p.count}</td>
-            <td>Shipping</td>
-            {/* <td>
+            <td>
               {p.product.shipping === "Yes" ? (
                 <CheckCircleOutlined style={{ color: "green" }} />
               ) : (
                 <CloseCircleOutlined style={{ color: "red" }} />
               )}
-            </td> */}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -45,6 +45,7 @@ const Orders = ({ orders, handleStatusChange }) => {
         <div key={order._id} className="row pb-5">
           <div className="btn btn-block bg-light">
             <ShowPaymentInfo order={order} showStatus={false} />
+
             <div className="row">
               <div className="col-md-4">Delivery Status</div>
               <div className="col-md-8">
@@ -57,7 +58,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                   name="status"
                 >
                   <option value="Not Processed">Not Processed</option>
-                  <option value="Cash On Delivery">Cash on delivery</option>
+                  <option value="Cash On Delivery">Cash On Delivery</option>
                   <option value="Processing">Processing</option>
                   <option value="Dispatched">Dispatched</option>
                   <option value="Cancelled">Cancelled</option>
@@ -66,10 +67,12 @@ const Orders = ({ orders, handleStatusChange }) => {
               </div>
             </div>
           </div>
+
           {showOrderInTable(order)}
         </div>
       ))}
     </>
   );
 };
+
 export default Orders;

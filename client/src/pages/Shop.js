@@ -9,13 +9,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox, Radio } from "antd";
 import {
-  AntDesignOutlined,
-  BgColorsOutlined,
-  DeliveredProcedureOutlined,
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
-  TagsOutlined,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
 
@@ -33,18 +29,17 @@ const Shop = () => {
   const [sub, setSub] = useState("");
   const [brands, setBrands] = useState([
     "Apple",
-    "Lenovo",
     "Samsung",
     "Microsoft",
-    "Asus",
-    "Dell",
+    "Lenovo",
+    "ASUS",
   ]);
   const [brand, setBrand] = useState("");
   const [colors, setColors] = useState([
     "Black",
-    "White",
     "Brown",
     "Silver",
+    "White",
     "Blue",
   ]);
   const [color, setColor] = useState("");
@@ -55,21 +50,11 @@ const Shop = () => {
   const { text } = search;
 
   useEffect(() => {
-    // fetch categories
-
     loadAllProducts();
-    getCategories()
-      .then((res) => {
-        setCategories(res.data);
-        // console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // fetch sub categories
-    getSubs().then((res) => {
-      setSubs(res.data);
-    });
+    // fetch categories
+    getCategories().then((res) => setCategories(res.data));
+    // fetch subcategories
+    getSubs().then((res) => setSubs(res.data));
   }, []);
 
   const fetchProducts = (arg) => {
@@ -99,7 +84,7 @@ const Shop = () => {
 
   // 3. load products based on price range
   useEffect(() => {
-    // console.log("ok to request");
+    console.log("ok to request");
     fetchProducts({ price });
   }, [ok]);
 
@@ -108,6 +93,8 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+
+    // reset
     setCategoryIds([]);
     setPrice(value);
     setStar("");
@@ -115,14 +102,13 @@ const Shop = () => {
     setBrand("");
     setColor("");
     setShipping("");
-
     setTimeout(() => {
       setOk(!ok);
     }, 300);
   };
 
-  // 4. load products based on categories
-  // show categories in a list in a checbox
+  // 4. load products based on category
+  // show categories in a list of checkbox
   const showCategories = () =>
     categories.map((c) => (
       <div key={c._id}>
@@ -141,46 +127,42 @@ const Shop = () => {
 
   // handle check for categories
   const handleCheck = (e) => {
+    // reset
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setStar("");
     setSub("");
+    setBrand("");
     setColor("");
     setShipping("");
-
-    setBrand("");
-
     // console.log(e.target.value);
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
-    let foundInTheState = inTheState.indexOf(justChecked);
+    let foundInTheState = inTheState.indexOf(justChecked); // index or -1
 
-    // indexOf method ---> if not found returns -1 else  return indux
+    // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
     if (foundInTheState === -1) {
       inTheState.push(justChecked);
     } else {
       // if found pull out one item from index
       inTheState.splice(foundInTheState, 1);
     }
+
     setCategoryIds(inTheState);
     // console.log(inTheState);
-
     fetchProducts({ category: inTheState });
   };
 
-  // 5. Show products by star rating
-
+  // 5. show products by star rating
   const handleStarClick = (num) => {
     // console.log(num);
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar(num);
@@ -188,10 +170,7 @@ const Shop = () => {
     setBrand("");
     setColor("");
     setShipping("");
-
-    fetchProducts({
-      stars: num,
-    });
+    fetchProducts({ stars: num });
   };
 
   const showStars = () => (
@@ -204,18 +183,19 @@ const Shop = () => {
     </div>
   );
 
-  // 6. show products bt sub categories
+  // 6. show products by sub category
   const showSubs = () =>
     subs.map((s) => (
       <div
         key={s._id}
-        className="p-1 m-1 badge badge-secondary "
-        style={{ cursor: "pointer" }}
         onClick={() => handleSub(s)}
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: "pointer" }}
       >
         {s.name}
       </div>
     ));
+
   const handleSub = (sub) => {
     // console.log("SUB", sub);
     setSub(sub);
@@ -223,17 +203,13 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
     setBrand("");
     setColor("");
     setShipping("");
-
-    fetchProducts({
-      sub,
-    });
+    fetchProducts({ sub });
   };
 
   // 7. show products based on brand name
@@ -245,7 +221,7 @@ const Shop = () => {
         name={b}
         checked={b === brand}
         onChange={handleBrand}
-        className="pb-2 pl-4 pr-4"
+        className="pb-1 pl-4 pr-4"
       >
         {b}
       </Radio>
@@ -257,27 +233,25 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
     setColor("");
-    setShipping("");
-
     setBrand(e.target.value);
-
+    setShipping("");
     fetchProducts({ brand: e.target.value });
   };
 
-  // 8. show products based on colors
+  // 8. show products based on color
   const showColors = () =>
     colors.map((c) => (
       <Radio
+        key={c}
         value={c}
         name={c}
         checked={c === color}
         onChange={handleColor}
-        className="pb-2 pl-4 pr-4"
+        className="pb-1 pl-4 pr-4"
       >
         {c}
       </Radio>
@@ -289,22 +263,21 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
     setBrand("");
-    setShipping("");
     setColor(e.target.value);
+    setShipping("");
     fetchProducts({ color: e.target.value });
   };
 
-  // 9. show products based on shiping
+  // 9. show products based on shipping yes/no
   const showShipping = () => (
     <>
       <Checkbox
         className="pb-2 pl-4 pr-4"
-        onChange={handleShippingChange}
+        onChange={handleShippingchange}
         value="Yes"
         checked={shipping === "Yes"}
       >
@@ -313,7 +286,7 @@ const Shop = () => {
 
       <Checkbox
         className="pb-2 pl-4 pr-4"
-        onChange={handleShippingChange}
+        onChange={handleShippingchange}
         value="No"
         checked={shipping === "No"}
       >
@@ -322,13 +295,12 @@ const Shop = () => {
     </>
   );
 
-  const handleShippingChange = (e) => {
+  const handleShippingchange = (e) => {
     setSub("");
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
@@ -379,10 +351,7 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pt-2">
-                {/* {JSON.stringify(categories)} */}
-                {showCategories()}
-              </div>
+              <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
 
             {/* stars */}
@@ -394,10 +363,7 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pt-2">
-                {/* {JSON.stringify(categories)} */}
-                {showStars()}
-              </div>
+              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
             </SubMenu>
 
             {/* sub category */}
@@ -405,12 +371,11 @@ const Shop = () => {
               key="4"
               title={
                 <span className="h6">
-                  <TagsOutlined /> Sub Categories
+                  <DownSquareOutlined /> Sub Categories
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pl-4 pt-2">
-                {/* {JSON.stringify(categories)} */}
+              <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
                 {showSubs()}
               </div>
             </SubMenu>
@@ -420,41 +385,39 @@ const Shop = () => {
               key="5"
               title={
                 <span className="h6">
-                  <AntDesignOutlined /> Brands
+                  <DownSquareOutlined /> Brands
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pr-5 pt-2 ">
+              <div style={{ maringTop: "-10px" }} className="pr-5">
                 {showBrands()}
               </div>
             </SubMenu>
 
-            {/* colors*/}
+            {/* colors */}
             <SubMenu
               key="6"
               title={
                 <span className="h6">
-                  <BgColorsOutlined /> Colors
+                  <DownSquareOutlined /> Colors
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pt-2 pr-5">
-                {/* {JSON.stringify(categories)} */}
+              <div style={{ maringTop: "-10px" }} className="pr-5">
                 {showColors()}
               </div>
             </SubMenu>
 
-            {/* colors*/}
+            {/* shipping */}
             <SubMenu
               key="7"
               title={
                 <span className="h6">
-                  <DeliveredProcedureOutlined /> Shipping
+                  <DownSquareOutlined /> Shipping
                 </span>
               }
             >
-              <div style={{ marginTop: "-10px" }} className="pr-5 pt-2 pb-5">
-                {/* {JSON.stringify(categories)} */}
+              <div style={{ maringTop: "-10px" }} className="pr-5">
                 {showShipping()}
               </div>
             </SubMenu>

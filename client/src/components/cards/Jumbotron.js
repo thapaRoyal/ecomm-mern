@@ -1,6 +1,7 @@
 import React from "react";
-import  Typewriter from "typewriter-effect";
+import Typewriter from "typewriter-effect";
 
+// Typewriter effect
 const Jumbotron = ({ text }) => (
   <Typewriter
     options={{
@@ -9,6 +10,6 @@ const Jumbotron = ({ text }) => (
       loop: true,
     }}
   />
-)
+);
 
 export default Jumbotron;

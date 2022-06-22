@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import SingleProduct from "../components/cards/SingleProduct";
 import { getProduct, productStar } from "../functions/product";
+import SingleProduct from "../components/cards/SingleProduct";
 import { useSelector } from "react-redux";
 import { getRelated } from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
-  const [star, setStar] = useState(0);
   const [related, setRelated] = useState([]);
-
+  const [star, setStar] = useState(0);
   // redux
   const { user } = useSelector((state) => ({ ...state }));
+
   const { slug } = match.params;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Product = ({ match }) => {
       let existingRatingObject = product.ratings.find(
         (ele) => ele.postedBy.toString() === user._id.toString()
       );
-      existingRatingObject && setStar(existingRatingObject.star); //current user star
+      existingRatingObject && setStar(existingRatingObject.star); // current user's star
     }
   });
 
@@ -39,7 +39,8 @@ const Product = ({ match }) => {
     setStar(newRating);
     console.table(newRating, name);
     productStar(name, newRating, user.token).then((res) => {
-      loadSingleProduct();
+      console.log("rating clicked", res.data);
+      loadSingleProduct(); // if you want to show updated rating in real time
     });
   };
 
@@ -60,6 +61,7 @@ const Product = ({ match }) => {
           <hr />
         </div>
       </div>
+
       <div className="row pb-5">
         {related.length ? (
           related.map((r) => (
@@ -68,7 +70,7 @@ const Product = ({ match }) => {
             </div>
           ))
         ) : (
-          <div className="col text-center">No related products</div>
+          <div className="text-center col">No Products Found</div>
         )}
       </div>
     </div>
