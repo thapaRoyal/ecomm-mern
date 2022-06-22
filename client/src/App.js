@@ -1,3 +1,64 @@
+// const App = () => {
+
+//
+//       {/* <SideDrawer /> */}
+//       <BrowserRouter>
+//         <Routes>
+//           <Route exact path="/" element={<Home />} />
+//           <Route exact path="/login" element={<Login />} />
+//           <Route exact path="/register" element={<Register />} />
+//           <Route
+//             exact
+//             path="/register/complete"
+//             element={<RegisterComplete />}
+//           />
+//           <Route exact path="/forgot/password" element={<ForgotPassword />} />
+//           <UserRoute exact path="/user/history" element={<History />} />
+//           <UserRoute exact path="/user/password" element={<Password />} />
+//           <UserRoute exact path="/user/wishlist" element={<Wishlist />} />
+//           <AdminRoute
+//             exact
+//             path="/admin/dashboard"
+//             element={<AdminDashboard />}
+//           />
+//           <AdminRoute
+//             exact
+//             path="/admin/category"
+//             element={<CategoryCreate />}
+//           />
+//           <AdminRoute
+//             exact
+//             path="/admin/category/:slug"
+//             element={<CategoryUpdate />}
+//           />
+//           <AdminRoute exact path="/admin/sub" element={<SubCreate />} />
+//           <AdminRoute exact path="/admin/sub/:slug" element={<SubUpdate />} />
+//           <AdminRoute exact path="/admin/product" element={<ProductCreate />} />
+//           <AdminRoute exact path="/admin/products" element={<AllProducts />} />
+//           <AdminRoute
+//             exact
+//             path="/admin/product/:slug"
+//             element={<ProductUpdate />}
+//           />
+//           <Route exact path="/product/:slug" element={<Product />} />
+//           <Route exact path="/category/:slug" element={<CategoryHome />} />
+//           <Route exact path="/sub/:slug" element={<SubHome />} />
+//           <Route exact path="/shop" element={<Shop />} />
+//           <Route exact path="/cart" element={<Cart />} />
+//           <UserRoute exact path="/checkout" element={<Checkout />} />
+//           <AdminRoute
+//             exact
+//             path="/admin/coupon"
+//             element={<CreateCouponPage />}
+//           />
+//           <UserRoute exact path="/payment" element={<Payment />} />
+//         </Routes>
+//       </BrowserRouter>
+//   );
+// };
+
+// export default App;
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -8,37 +69,7 @@ import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
 
-// import Login from "./pages/auth/Login";
-// import Register from "./pages/auth/Register";
-// import Home from "./pages/Home";
-// import Header from "./components/nav/Header";
-// import SideDrawer from "./components/drawer/SideDrawer";
-
-// import RegisterComplete from "./pages/auth/RegisterComplete";
-// import ForgotPassword from "./pages/auth/ForgotPassword";
-// import History from "./pages/user/History";
-// import UserRoute from "./components/routes/UserRoute";
-// import AdminRoute from "./components/routes/AdminRoute";
-// import Password from "./pages/user/Password";
-// import Wishlist from "./pages/user/Wishlist";
-// import AdminDashboard from "./pages/admin/AdminDashboard";
-// import CategoryCreate from "./pages/admin/category/CategoryCreate";
-// import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
-// import SubCreate from "./pages/admin/sub/SubCreate";
-// import SubUpdate from "./pages/admin/sub/SubUpdate";
-// import ProductCreate from "./pages/admin/product/ProductCreate";
-// import AllProducts from "./pages/admin/product/AllProducts";
-// import ProductUpdate from "./pages/admin/product/ProductUpdate";
-// import Product from "./pages/Product";
-// import CategoryHome from "./pages/category/CategoryHome";
-// import SubHome from "./pages/sub/SubHome";
-// import Shop from "./pages/Shop";
-// import Cart from "./pages/Cart";
-// import Checkout from "./pages/Checkout";
-// import CreateCouponPage from "./pages/admin/coupon/CreateCouponPage";
-// import Payment from "./pages/Payment";
-
-// using lazy
+// // using lazy
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const Home = lazy(() => import('./pages/Home'));
@@ -77,8 +108,7 @@ const Payment = lazy(() => import('./pages/Payment'));
 
 const App = () => {
   const dispatch = useDispatch();
-
-  // to check firebase auth state
+  //   // to check firebase auth state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -116,12 +146,11 @@ const App = () => {
       }
     >
       <Header />
-      {/* <SideDrawer /> */}
       <ToastContainer />
-      <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/login" element={<Login />} />
+
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        {/* <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route
             exact
@@ -167,11 +196,41 @@ const App = () => {
             path="/admin/coupon"
             element={<CreateCouponPage />}
           />
-          <UserRoute exact path="/payment" element={<Payment />} />
-        </Routes>
-      </BrowserRouter>
+          <UserRoute exact path="/payment" element={<Payment />} /> */}
+      </Routes>
     </Suspense>
   );
 };
 
 export default App;
+
+///////////////////////////////
+// import Login from "./pages/auth/Login";
+// import Register from "./pages/auth/Register";
+// import Home from "./pages/Home";
+// import Header from "./components/nav/Header";
+// import SideDrawer from "./components/drawer/SideDrawer";
+
+// import RegisterComplete from "./pages/auth/RegisterComplete";
+// import ForgotPassword from "./pages/auth/ForgotPassword";
+// import History from "./pages/user/History";
+// import UserRoute from "./components/routes/UserRoute";
+// import AdminRoute from "./components/routes/AdminRoute";
+// import Password from "./pages/user/Password";
+// import Wishlist from "./pages/user/Wishlist";
+// import AdminDashboard from "./pages/admin/AdminDashboard";
+// import CategoryCreate from "./pages/admin/category/CategoryCreate";
+// import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
+// import SubCreate from "./pages/admin/sub/SubCreate";
+// import SubUpdate from "./pages/admin/sub/SubUpdate";
+// import ProductCreate from "./pages/admin/product/ProductCreate";
+// import AllProducts from "./pages/admin/product/AllProducts";
+// import ProductUpdate from "./pages/admin/product/ProductUpdate";
+// import Product from "./pages/Product";
+// import CategoryHome from "./pages/category/CategoryHome";
+// import SubHome from "./pages/sub/SubHome";
+// import Shop from "./pages/Shop";
+// import Cart from "./pages/Cart";
+// import Checkout from "./pages/Checkout";
+// import CreateCouponPage from "./pages/admin/coupon/CreateCouponPage";
+// import Payment from "./pages/Payment";

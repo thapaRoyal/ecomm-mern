@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import UserNav from "../../components/nav/UserNav";
-import { getUserOrders } from "../../functions/user";
-import { useSelector, useDispatch } from "react-redux";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
-import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFDownloadLink,
-  PDFViewer,
-} from "@react-pdf/renderer";
-import Invoice from "../../components/order/Invoice";
+import React, { useState, useEffect } from 'react';
+import UserNav from '../../components/nav/UserNav';
+import { getUserOrders } from '../../functions/user';
+import { useSelector, useDispatch } from 'react-redux';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
+import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo';
+// import {
+//   Document,
+//   Page,
+//   Text,
+//   View,
+//   StyleSheet,
+//   PDFDownloadLink,
+//   PDFViewer,
+// } from "@react-pdf/renderer";
+import Invoice from '../../components/order/Invoice';
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -57,10 +57,10 @@ const History = () => {
             <td>{p.color}</td>
             <td>{p.count}</td>
             <td>
-              {p.product.shipping === "Yes" ? (
-                <CheckCircleOutlined style={{ color: "green" }} />
+              {p.product.shipping === 'Yes' ? (
+                <CheckCircleOutlined style={{ color: 'green' }} />
               ) : (
-                <CloseCircleOutlined style={{ color: "red" }} />
+                <CloseCircleOutlined style={{ color: 'red' }} />
               )}
             </td>
           </tr>
@@ -70,13 +70,14 @@ const History = () => {
   );
 
   const showDownloadLink = (order) => (
-    <PDFDownloadLink
-      document={<Invoice order={order} />}
-      fileName="invoice.pdf"
-      className="btn btn-sm btn-block btn-outline-primary"
-    >
-      Download PDF
-    </PDFDownloadLink>
+    <div>pdf download</div>
+    // <PDFDownloadLink
+    //   document={<Invoice order={order} />}
+    //   fileName="invoice.pdf"
+    //   className="btn btn-sm btn-block btn-outline-primary"
+    // >
+    //   Download PDF
+    // </PDFDownloadLink>
   );
 
   const showEachOrders = () =>
@@ -100,7 +101,7 @@ const History = () => {
         </div>
         <div className="col text-center">
           <h4>
-            {orders.length ? "User purchase orders" : "No purchase orders"}
+            {orders.length ? 'User purchase orders' : 'No purchase orders'}
           </h4>
           {showEachOrders()}
         </div>
