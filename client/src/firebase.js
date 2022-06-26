@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { initializeApp } from 'firebase/app';
 
-// Your web app's Firebase configuration
+// firebase config
 const firebaseConfig = {
   apiKey: 'AIzaSyDWoUuJXFCRdx5jVvkkp3lG-KXwWdw39Zw',
   authDomain: 'ecommerce-mern-lapshop.firebaseapp.com',

@@ -1,14 +1,13 @@
 const express = require("express");
-
 const router = express.Router();
 
 // middlewares
-const { authCheck, adminCheck } = require("../middlewares/authMiddleware");
+const { authCheck, adminCheck } = require("../middlewares/auth");
 
-// controllers
+// controller
 const { create, read, update, remove, list } = require("../controllers/sub");
 
-// ROUTES
+// routes
 router.post("/sub", authCheck, adminCheck, create);
 router.get("/subs", list);
 router.get("/sub/:slug", read);

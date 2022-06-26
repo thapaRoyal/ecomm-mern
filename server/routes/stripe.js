@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-// controller
 const { createPaymentIntent } = require("../controllers/stripe");
-
+const { route } = require("./user");
 // middleware
-const { authCheck } = require("../middlewares/authMiddleware");
+const { authCheck } = require("../middlewares/auth");
 
-// routes
 router.post("/create-payment-intent", authCheck, createPaymentIntent);
 
 module.exports = router;

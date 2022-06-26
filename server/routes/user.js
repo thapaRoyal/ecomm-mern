@@ -3,12 +3,12 @@ const express = require("express");
 const router = express.Router();
 
 // middlewares
-const { authCheck } = require("../middlewares/authMiddleware");
+const { authCheck } = require("../middlewares/auth");
 // controllers
 const {
   userCart,
   getUserCart,
-  emptyUserCart,
+  emptyCart,
   saveAddress,
   applyCouponToUserCart,
   createOrder,
@@ -21,7 +21,7 @@ const {
 
 router.post("/user/cart", authCheck, userCart); // save cart
 router.get("/user/cart", authCheck, getUserCart); // get cart
-router.delete("/user/cart", authCheck, emptyUserCart); // empty cart
+router.delete("/user/cart", authCheck, emptyCart); // empty cart
 router.post("/user/address", authCheck, saveAddress);
 
 router.post("/user/order", authCheck, createOrder); // stripe

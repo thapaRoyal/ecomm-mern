@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema(
       enum: [
         "Not Processed",
         "Cash On Delivery",
-        "Processing",
+        "processing",
         "Dispatched",
         "Cancelled",
         "Completed",
