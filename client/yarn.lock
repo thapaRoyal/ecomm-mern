@@ -12274,6 +12274,11 @@
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
 
+"typescript@^3.2.1", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+  "integrity" "sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-3.9.10.tgz"
+  "version" "3.9.10"
+
 "typewriter-effect@^2.13.1":
   "integrity" "sha512-SlKC2URrw/ziEEWmSQxPu4mbLrXrQibwJ3iuRFu4rXbRohT4AsBM5BvSBsqD8lUIvqqhcIS/WdWk5Us15jd3qg=="
   "resolved" "https://registry.npmjs.org/typewriter-effect/-/typewriter-effect-2.13.1.tgz"
