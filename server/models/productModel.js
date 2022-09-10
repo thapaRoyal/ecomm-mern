@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema(
@@ -34,13 +34,13 @@ const productSchema = new mongoose.Schema(
 
     category: {
       type: ObjectId,
-      ref: "Category",
+      ref: 'Category',
     },
 
     subs: [
       {
         type: ObjectId,
-        ref: "Sub",
+        ref: 'Sub',
       },
     ],
     quantity: Number,
@@ -54,25 +54,33 @@ const productSchema = new mongoose.Schema(
     },
     shipping: {
       type: String,
-      enum: ["Yes", "No"],
+      enum: ['Yes', 'No'],
     },
     color: {
       type: String,
-      enum: ["Black", "White", "Brown", "Silver", "Blue"],
+      enum: ['Black', 'White', 'Brown', 'Silver', 'Blue'],
     },
 
     brand: {
       type: String,
-      enum: ["Apple", "Lenovo", "Samsung", "Microsoft", "Asus", "Dell"],
+      enum: [
+        'Apple',
+        'Lenovo',
+        'Samsung',
+        'Microsoft',
+        'Asus',
+        'Dell',
+        'Xiaomi',
+      ],
     },
     ratings: [
       {
         star: Number,
-        postedBy: { type: ObjectId, ref: "User" },
+        postedBy: { type: ObjectId, ref: 'User' },
       },
     ],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model('Product', productSchema);

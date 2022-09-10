@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import AdminNav from "../../../components/nav/AdminNav";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { createProduct } from "../../../functions/product";
-import ProductCreateForm from "../../../components/forms/ProductCreateForm";
-import { getCategories, getCategorySubs } from "../../../functions/category";
-import FileUpload from "../../../components/forms/FileUpload";
-import { LoadingOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import AdminNav from '../../../components/nav/AdminNav';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { createProduct } from '../../../functions/product';
+import ProductCreateForm from '../../../components/forms/ProductCreateForm';
+import { getCategories, getCategorySubs } from '../../../functions/category';
+import FileUpload from '../../../components/forms/FileUpload';
+import { LoadingOutlined } from '@ant-design/icons';
 
 /**
  * EASY WAY TO RE-POPULATE SUBS IF USER SELECT ANOTHER CATEGORY??
@@ -18,14 +18,14 @@ import { LoadingOutlined } from "@ant-design/icons";
  */
 
 const initialState = {
-  title: "Macbook Pro",
-  description: "This is the best Apple product",
-  price: "45000",
+  title: '',
+  description: '',
+  price: '',
   categories: [],
-  category: "",
+  category: '',
   subs: [],
-  shipping: "Yes",
-  quantity: "50",
+  shipping: '',
+  quantity: '',
   images: [
     // {
     //   public_id: "jwrzeubemmypod99e8lz",
@@ -43,10 +43,10 @@ const initialState = {
     //     "https://res.cloudinary.com/dcqjrwaoi/image/upload/v1599480913/ho6wnp7sugyemnmtoogf.jpg",
     // },
   ],
-  colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
-  color: "White",
-  brand: "Apple",
+  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
+  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS', 'Xiaomi'],
+  color: 'White',
+  brand: 'Apple',
 };
 
 const ProductCreate = () => {
@@ -87,10 +87,10 @@ const ProductCreate = () => {
 
   const handleCatagoryChange = (e) => {
     e.preventDefault();
-    console.log("CLICKED CATEGORY", e.target.value);
+    console.log('CLICKED CATEGORY', e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      console.log('SUB OPTIONS ON CATGORY CLICK', res);
       setSubOptions(res.data);
     });
     setShowSub(true);

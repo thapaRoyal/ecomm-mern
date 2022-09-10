@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
-import { userCart } from "../functions/user";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
+import { userCart } from '../functions/user';
 
 const Cart = ({ history }) => {
   const { cart, user } = useSelector((state) => ({ ...state }));
@@ -18,24 +18,24 @@ const Cart = ({ history }) => {
     // console.log("cart", JSON.stringify(cart, null, 4));
     userCart(cart, user.token)
       .then((res) => {
-        console.log("CART POST RES", res);
-        if (res.data.ok) history.push("/checkout");
+        console.log('CART POST RES', res);
+        if (res.data.ok) history.push('/checkout');
       })
-      .catch((err) => console.log("cart save err", err));
+      .catch((err) => console.log('cart save err', err));
   };
 
   const saveCashOrderToDb = () => {
     // console.log("cart", JSON.stringify(cart, null, 4));
     dispatch({
-      type: "COD",
+      type: 'COD',
       payload: true,
     });
     userCart(cart, user.token)
       .then((res) => {
-        console.log("CART POST RES", res);
-        if (res.data.ok) history.push("/checkout");
+        console.log('CART POST RES', res);
+        if (res.data.ok) history.push('/checkout');
       })
-      .catch((err) => console.log("cart save err", err));
+      .catch((err) => console.log('cart save err', err));
   };
 
   const showCartItems = () => (
@@ -80,12 +80,12 @@ const Cart = ({ history }) => {
           {cart.map((c, i) => (
             <div key={i}>
               <p>
-                {c.title} x {c.count} = ${c.price * c.count}
+                {c.title} x {c.count} = Rs.{c.price * c.count}
               </p>
             </div>
           ))}
           <hr />
-          Total: <b>${getTotal()}</b>
+          Total: <b>Rs.{getTotal()}</b>
           <hr />
           {user ? (
             <>
@@ -109,8 +109,8 @@ const Cart = ({ history }) => {
             <button className="btn btn-sm btn-primary mt-2">
               <Link
                 to={{
-                  pathname: "/login",
-                  state: { from: "cart" },
+                  pathname: '/login',
+                  state: { from: 'cart' },
                 }}
               >
                 Login to Checkout

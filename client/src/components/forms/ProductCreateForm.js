@@ -1,5 +1,5 @@
-import React from "react";
-import { Select } from "antd";
+import React from 'react';
+import { Select } from 'antd';
 
 const { Option } = Select;
 
@@ -107,6 +107,7 @@ const ProductCreateForm = ({
           {brands.map((b) => (
             <option key={b} value={b}>
               {b}
+              {console.log(b)}
             </option>
           ))}
         </select>
@@ -134,7 +135,7 @@ const ProductCreateForm = ({
           <label>Sub Categories</label>
           <Select
             mode="multiple"
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             placeholder="Please select"
             value={subs}
             onChange={(value) => setValues({ ...values, subs: value })}
