@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { initializeApp } from 'firebase/app';
 
-// firebase config
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyDWoUuJXFCRdx5jVvkkp3lG-KXwWdw39Zw',
   authDomain: 'ecommerce-mern-lapshop.firebaseapp.com',
@@ -12,7 +12,9 @@ const firebaseConfig = {
   messagingSenderId: '912741808117',
   appId: '1:912741808117:web:d70fede81ec23644c592bc',
 };
+
 // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 
 // export

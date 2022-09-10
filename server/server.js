@@ -10,19 +10,10 @@ require('dotenv').config();
 const app = express();
 
 // db
-// import statements
-// Database connection
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('DB connected...');
-});
+mongoose
+  .connect(process.env.DATABASE, {})
+  .then(() => console.log('DB CONNECTED'))
+  .catch((err) => console.log('DB CONNECTION ERR', err));
 
 // middlewares
 app.use(morgan('dev'));
