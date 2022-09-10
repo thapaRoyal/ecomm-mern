@@ -34,6 +34,7 @@ const Shop = () => {
     'Lenovo',
     'ASUS',
     'Xiaomi',
+    'Dell',
   ]);
   const [brand, setBrand] = useState('');
   const [colors, setColors] = useState([
